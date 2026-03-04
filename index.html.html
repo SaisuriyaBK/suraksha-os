@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Suraksha OS</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#F7F4EF; --bg2:#EFEAE1; --bg3:#E5DED3;
+  --fresh:#1A6B72; --fresh-lt:#EAF4F5; --fresh-mid:#C2DFE2;
+  --gray-w:#C4785A; --gray-lt:#F6EDE8; --gray-mid:#E8C5B4;
+  --rain:#4A7C8E; --rain-lt:#E8F0F3; --rain-mid:#B8D0D9;
+  --amber:#D47A2A; --amber-lt:#FDF2E5;
+  --ink:#1C1C1E; --ink-mid:#5C5C6E; --ink-light:#9A9AAD; --ink-xlt:#C8C8D8;
+  --white:#FFFFFF; --green:#2E7D52; --green-lt:#E8F5ED;
+  --danger:#C0392B; --danger-lt:#FDECEA;
+  --sensor:#6B35A3; --sensor-lt:#F0EBF8;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{background:#E5DED3;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-width:390px;margin:0 auto;min-height:100vh;overflow-x:hidden;}
+.screen{display:none;min-height:100vh;padding-bottom:90px;}
+.screen.active{display:block;}
+
+/* STATUS BAR */
+.status-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 24px 8px;font-size:12px;color:var(--ink-mid);}
+.time{font-weight:600;color:var(--ink);font-size:15px;}
+
+/* HEADER */
+.header{padding:8px 24px 18px;display:flex;align-items:center;justify-content:space-between;}
+.app-name-top{font-family:'DM Serif Display',serif;font-size:26px;color:var(--ink);line-height:1;letter-spacing:-0.5px;}
+.app-name-top em{font-style:italic;color:var(--fresh);}
+.app-name-sub{font-size:11px;color:var(--ink-light);letter-spacing:1.5px;text-transform:uppercase;margin-top:3px;font-weight:500;}
+.header-right{display:flex;align-items:center;gap:8px;}
+.live-badge{display:flex;align-items:center;gap:5px;background:var(--green-lt);border:1px solid rgba(46,125,82,0.2);color:var(--green);font-size:10px;font-weight:600;padding:5px 10px;border-radius:20px;letter-spacing:0.8px;}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:breathe 2s ease-in-out infinite;}
+@keyframes breathe{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.icon-btn{width:38px;height:38px;border-radius:50%;background:var(--bg2);border:1px solid var(--bg3);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;font-size:16px;}
+.badge{position:absolute;top:-2px;right:-2px;min-width:15px;height:15px;background:var(--amber);color:white;border-radius:8px;font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg);padding:0 3px;}
+
+/* BUILDING SELECTOR */
+.bsel{margin:0 24px 20px;background:var(--white);border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(28,28,30,0.06);}
+.bsel-top{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
+.bsel-left{display:flex;align-items:center;gap:12px;}
+.bsel-icon{font-size:22px;}
+.b-sub{font-size:10px;color:var(--ink-light);text-transform:uppercase;letter-spacing:1px;font-weight:500;}
+.b-path{font-size:14px;font-weight:600;color:var(--ink);margin-top:1px;}
+.bsel-right{display:flex;align-items:center;gap:8px;}
+.bsel-expand{width:26px;height:26px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--ink-light);font-size:11px;transition:transform 0.2s;}
+.bsel-expand.open{transform:rotate(180deg);}
+/* Dropdown */
+.bsel-dropdown{display:none;border-top:1px solid var(--bg2);}
+.bsel-dropdown.open{display:block;}
+.bsel-item{padding:13px 18px;display:flex;align-items:center;gap:12px;cursor:pointer;border-bottom:1px solid var(--bg2);}
+.bsel-item:last-child{border-bottom:none;}
+.bsel-item:active{background:var(--bg);}
+.bsel-item.sel{background:var(--fresh-lt);}
+.bsel-item-icon{font-size:18px;}
+.bsel-item-name{font-size:13px;font-weight:600;flex:1;}
+.bsel-item-sub{font-size:11px;color:var(--ink-light);}
+.bsel-check{color:var(--fresh);font-size:16px;}
+/* Floor selector */
+.floor-row{padding:10px 18px;display:flex;gap:6px;flex-wrap:wrap;border-top:1px solid var(--bg2);background:var(--bg);}
+.floor-chip{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid var(--bg3);background:var(--white);}
+.floor-chip.sel{background:var(--fresh);color:white;border-color:var(--fresh);}
+.floor-chip:active{opacity:0.8;}
+
+/* SCORE BANNER */
+.score-banner{margin:0 24px 22px;background:var(--fresh);border-radius:22px;padding:20px 24px;position:relative;overflow:hidden;}
+.score-banner::before{content:'';position:absolute;right:-30px;top:-30px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,0.06);}
+.score-label{font-size:10px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:1.5px;font-weight:500;margin-bottom:6px;}
+.score-row{display:flex;align-items:flex-end;justify-content:space-between;}
+.score-big{font-family:'DM Serif Display',serif;font-size:48px;color:white;line-height:1;letter-spacing:-2px;}
+.score-big sup{font-family:'DM Sans',sans-serif;font-size:16px;font-weight:300;vertical-align:top;margin-top:8px;display:inline-block;opacity:0.7;}
+.score-right{text-align:right;position:relative;z-index:1;}
+.score-status{background:rgba(255,255,255,0.15);color:white;font-size:11px;font-weight:500;padding:5px 12px;border-radius:20px;margin-bottom:4px;display:inline-block;}
+.score-updated{font-size:10px;color:rgba(255,255,255,0.45);}
+.score-bar-wrap{margin-top:14px;background:rgba(255,255,255,0.15);border-radius:10px;height:5px;overflow:hidden;}
+.score-bar-fill{height:100%;background:rgba(255,255,255,0.9);border-radius:10px;transition:width 0.8s ease;}
+
+/* SENSOR STATUS BAR */
+.sensor-bar{margin:0 24px 16px;background:var(--sensor-lt);border:1px solid rgba(107,53,163,0.15);border-radius:14px;padding:10px 16px;display:flex;align-items:center;gap:10px;}
+.sensor-icon{font-size:18px;}
+.sensor-text{flex:1;}
+.sensor-title{font-size:12px;font-weight:600;color:var(--sensor);}
+.sensor-sub{font-size:10px;color:var(--ink-light);margin-top:1px;}
+.sensor-mode-btn{font-size:10px;font-weight:600;color:var(--sensor);background:white;border:1px solid rgba(107,53,163,0.2);padding:5px 10px;border-radius:8px;cursor:pointer;}
+
+/* SEC HEADER */
+.sec-header{padding:0 24px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;}
+.sec-title{font-size:11px;color:var(--ink-light);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;}
+.sec-link{font-size:12px;color:var(--fresh);font-weight:500;cursor:pointer;}
+
+/* WATER CARDS */
+.cards{padding:0 24px;display:flex;flex-direction:column;gap:10px;margin-bottom:22px;}
+.w-card{background:var(--white);border-radius:20px;padding:18px 18px 14px;box-shadow:0 2px 14px rgba(28,28,30,0.05);border:1px solid rgba(28,28,30,0.04);position:relative;overflow:hidden;}
+.w-card::before{content:'';position:absolute;left:0;top:18%;bottom:18%;width:4px;border-radius:0 4px 4px 0;}
+.w-card.fresh::before{background:var(--fresh);}
+.w-card.graywater::before{background:var(--gray-w);}
+.w-card.rain::before{background:var(--rain);}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
+.card-left{display:flex;align-items:center;gap:10px;}
+.card-orb{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
+.fresh .card-orb{background:var(--fresh-lt);}
+.graywater .card-orb{background:var(--gray-lt);}
+.rain .card-orb{background:var(--rain-lt);}
+.card-tag{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:2px;}
+.fresh .card-tag{color:var(--fresh);}
+.graywater .card-tag{color:var(--gray-w);}
+.rain .card-tag{color:var(--rain);}
+.card-name{font-family:'DM Serif Display',serif;font-size:16px;color:var(--ink);}
+.card-vol{text-align:right;}
+.vol-main{font-family:'DM Serif Display',serif;font-size:26px;line-height:1;letter-spacing:-1px;}
+.fresh .vol-main{color:var(--fresh);}
+.graywater .vol-main{color:var(--gray-w);}
+.rain .vol-main{color:var(--rain);}
+.vol-denom{font-size:10px;color:var(--ink-light);margin-top:2px;}
+.prog-row{display:flex;justify-content:space-between;margin-bottom:6px;}
+.prog-desc{font-size:11px;color:var(--ink-mid);}
+.prog-pct{font-size:11px;font-weight:600;}
+.fresh .prog-pct{color:var(--fresh);}
+.graywater .prog-pct{color:var(--gray-w);}
+.rain .prog-pct{color:var(--rain);}
+.prog-track{height:6px;border-radius:10px;margin-bottom:12px;}
+.fresh .prog-track{background:var(--fresh-mid);}
+.graywater .prog-track{background:var(--gray-mid);}
+.rain .prog-track{background:var(--rain-mid);}
+.prog-fill{height:100%;border-radius:10px;transition:width 0.7s ease;}
+.fresh .prog-fill{background:var(--fresh);}
+.graywater .prog-fill{background:var(--gray-w);}
+.rain .prog-fill{background:var(--rain);}
+.chips{display:flex;gap:6px;margin-bottom:10px;}
+.chip{flex:1;background:var(--bg);border-radius:10px;padding:8px 4px;text-align:center;}
+.chip-val{font-size:12px;font-weight:600;color:var(--ink);line-height:1;}
+.chip-val.a{color:var(--amber);}
+.chip-val.g{color:var(--green);}
+.chip-val.r{color:var(--danger);}
+.chip-val.s{color:var(--sensor);}
+.chip-lbl{font-size:9px;color:var(--ink-light);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px;font-weight:500;}
+/* sensor indicator on card */
+.sensor-indicator{display:flex;align-items:center;gap:6px;margin-bottom:10px;padding:6px 10px;background:var(--sensor-lt);border-radius:8px;}
+.sensor-indicator span{font-size:10px;color:var(--sensor);font-weight:500;}
+.sensor-pulse{width:6px;height:6px;border-radius:50%;background:var(--sensor);animation:breathe 1.5s ease-in-out infinite;}
+.edit-btn{width:100%;padding:9px;background:var(--bg);border-radius:10px;border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--ink-mid);cursor:pointer;}
+.edit-btn:active{background:var(--bg3);}
+.edit-btn.sensor-mode{background:var(--sensor-lt);color:var(--sensor);}
+
+/* TOTALS */
+.totals-wrap{padding:0 24px;margin-bottom:22px;}
+.totals-card{background:var(--bg2);border-radius:20px;padding:18px;display:flex;}
+.total-item{flex:1;text-align:center;position:relative;}
+.total-item+.total-item::before{content:'';position:absolute;left:0;top:15%;bottom:15%;width:1px;background:var(--bg3);}
+.total-num{font-family:'DM Serif Display',serif;font-size:19px;color:var(--ink);letter-spacing:-0.3px;}
+.total-lbl{font-size:9px;color:var(--ink-light);text-transform:uppercase;letter-spacing:0.8px;font-weight:600;margin-top:2px;}
+.total-sub{font-size:10px;color:var(--ink-mid);margin-top:1px;}
+
+/* ALERTS */
+.alerts-wrap{padding:0 24px;margin-bottom:22px;}
+.alert-item{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:14px;margin-bottom:8px;border:1px solid transparent;}
+.alert-item.warn{background:var(--amber-lt);border-color:rgba(212,122,42,0.15);}
+.alert-item.good{background:var(--green-lt);border-color:rgba(46,125,82,0.15);}
+.alert-item.danger{background:var(--danger-lt);border-color:rgba(192,57,43,0.15);}
+.a-ico{font-size:17px;flex-shrink:0;margin-top:1px;}
+.a-body{flex:1;}
+.a-title{font-size:13px;font-weight:600;color:var(--ink);}
+.a-sub{font-size:11px;color:var(--ink-mid);margin-top:1px;line-height:1.4;}
+.a-time{font-size:10px;color:var(--ink-light);margin-top:1px;}
+
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:390px;background:rgba(247,244,239,0.96);backdrop-filter:blur(16px);border-top:1px solid var(--bg2);padding:10px 0 24px;display:flex;justify-content:space-around;z-index:100;}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 16px;cursor:pointer;border-radius:12px;}
+.nav-icon{font-size:20px;}
+.nav-lbl{font-size:9px;text-transform:uppercase;letter-spacing:0.7px;font-weight:600;}
+.nav-item.on .nav-lbl{color:var(--fresh);}
+.nav-item:not(.on) .nav-lbl{color:var(--ink-light);}
+.nav-dot{width:4px;height:4px;border-radius:50%;background:var(--fresh);margin-top:-1px;}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);backdrop-filter:blur(4px);z-index:200;display:none;align-items:flex-end;justify-content:center;}
+.overlay.open{display:flex;}
+.modal{background:var(--white);border-radius:28px 28px 0 0;padding:26px 24px 44px;width:390px;max-height:88vh;overflow-y:auto;animation:slideUp 0.28s ease;}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.handle{width:36px;height:4px;background:var(--bg3);border-radius:2px;margin:0 auto 18px;}
+.modal-title{font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:4px;}
+.modal-sub{font-size:12px;color:var(--ink-light);margin-bottom:22px;line-height:1.5;}
+
+/* FORM */
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--ink-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:7px;}
+.field input[type=text],.field input[type=number],.field select{width:100%;padding:13px 15px;border-radius:13px;border:1.5px solid var(--bg3);background:var(--bg);font-family:'DM Sans',sans-serif;font-size:15px;color:var(--ink);outline:none;transition:border 0.2s;appearance:none;}
+.field input:focus,.field select:focus{border-color:var(--fresh);}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239A9AAD' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;}
+.field input[type=range]{width:100%;height:7px;border-radius:10px;outline:none;cursor:pointer;margin-top:6px;appearance:none;}
+.field input[type=range]::-webkit-slider-thumb{appearance:none;width:22px;height:22px;border-radius:50%;background:white;box-shadow:0 2px 8px rgba(0,0,0,0.2);border:3px solid currentColor;}
+.range-display{font-family:'DM Serif Display',serif;font-size:20px;text-align:center;margin-top:4px;}
+.btn-row{display:flex;gap:10px;margin-top:8px;}
+.btn-p{flex:1;padding:15px;background:var(--fresh);color:white;border:none;border-radius:14px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;}
+.btn-p:active{opacity:0.9;}
+.btn-s{flex:1;padding:14px;background:var(--bg);color:var(--ink-mid);border:none;border-radius:14px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;}
+.btn-danger{width:100%;padding:13px;background:var(--danger-lt);color:var(--danger);border:1px solid rgba(192,57,43,0.2);border-radius:14px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-top:8px;}
+
+/* SENSOR CONFIG SECTION */
+.sensor-config{background:var(--sensor-lt);border:1px solid rgba(107,53,163,0.15);border-radius:16px;padding:16px;margin-bottom:16px;}
+.sensor-config-title{font-size:13px;font-weight:600;color:var(--sensor);margin-bottom:4px;}
+.sensor-config-sub{font-size:11px;color:var(--ink-mid);line-height:1.5;margin-bottom:12px;}
+.sensor-config .field label{color:var(--sensor);}
+
+/* PAGE TITLE */
+.page-title{font-family:'DM Serif Display',serif;font-size:24px;padding:8px 24px 18px;color:var(--ink);}
+
+/* REPORTS */
+.report-card{background:var(--white);border-radius:20px;padding:18px;margin:0 24px 14px;box-shadow:0 2px 14px rgba(28,28,30,0.04);}
+.report-card-title{font-family:'DM Serif Display',serif;font-size:17px;margin-bottom:14px;}
+.log-item{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--bg2);}
+.log-item:last-child{border-bottom:none;}
+.log-dot{width:9px;height:9px;border-radius:50%;margin-top:4px;flex-shrink:0;}
+.log-text{flex:1;}
+.log-action{font-size:13px;font-weight:500;}
+.log-detail{font-size:11px;color:var(--ink-light);margin-top:1px;}
+.log-time{font-size:10px;color:var(--ink-xlt);text-align:right;flex-shrink:0;}
+.no-data{text-align:center;padding:24px;color:var(--ink-light);font-size:13px;line-height:1.6;}
+
+/* SETTINGS */
+.setting-section{margin:0 24px 20px;}
+.setting-group-lbl{font-size:11px;color:var(--ink-light);text-transform:uppercase;letter-spacing:1.3px;font-weight:600;margin-bottom:10px;}
+.setting-item{background:var(--white);border-radius:14px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;box-shadow:0 1px 6px rgba(28,28,30,0.04);}
+.setting-item:active{background:var(--bg2);}
+.setting-icon-wrap{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:17px;}
+.si-fresh{background:var(--fresh-lt);}
+.si-gray{background:var(--gray-lt);}
+.si-rain{background:var(--rain-lt);}
+.si-sensor{background:var(--sensor-lt);}
+.si-general{background:var(--bg2);}
+.setting-info{flex:1;}
+.setting-name{font-size:14px;font-weight:500;}
+.setting-val{font-size:11px;color:var(--ink-light);margin-top:1px;}
+.setting-arrow{color:var(--ink-xlt);}
+
+/* BUILDINGS SCREEN */
+.building-list-screen{padding:0 24px;margin-bottom:20px;}
+.bc{background:var(--white);border-radius:18px;padding:16px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px;box-shadow:0 2px 10px rgba(28,28,30,0.05);border:2px solid transparent;}
+.bc.sel{border-color:var(--fresh);}
+.bc-emoji{font-size:26px;flex-shrink:0;}
+.bc-body{flex:1;}
+.bc-name{font-size:15px;font-weight:600;}
+.bc-sub{font-size:11px;color:var(--ink-light);margin-top:2px;}
+.bc-floors{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;}
+.bc-floor-tag{font-size:10px;font-weight:600;padding:3px 9px;border-radius:8px;background:var(--bg2);color:var(--ink-mid);}
+.bc-actions{display:flex;flex-direction:column;gap:6px;align-items:flex-end;}
+.bc-sel-btn{font-size:10px;font-weight:600;color:var(--fresh);background:var(--fresh-lt);border:none;padding:5px 10px;border-radius:8px;cursor:pointer;}
+.bc-del-btn{font-size:10px;color:var(--danger);background:var(--danger-lt);border:none;padding:5px 10px;border-radius:8px;cursor:pointer;}
+.add-btn{width:calc(100% - 48px);margin:0 24px;padding:15px;background:var(--fresh-lt);border:2px dashed var(--fresh-mid);border-radius:18px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:var(--fresh);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+
+/* TOGGLE SWITCH */
+.toggle-wrap{display:flex;align-items:center;justify-content:space-between;padding:12px 0;}
+.toggle-label{font-size:13px;color:var(--ink);font-weight:500;}
+.toggle{position:relative;width:44px;height:26px;cursor:pointer;}
+.toggle input{opacity:0;width:0;height:0;}
+.toggle-track{position:absolute;inset:0;background:var(--bg3);border-radius:13px;transition:background 0.25s;}
+.toggle input:checked+.toggle-track{background:var(--fresh);}
+.toggle-thumb{position:absolute;top:3px;left:3px;width:20px;height:20px;background:white;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,0.2);transition:left 0.25s;}
+.toggle input:checked~.toggle-thumb{left:21px;}
+
+/* TOAST */
+.toast{position:fixed;top:60px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--ink);color:white;padding:11px 20px;border-radius:13px;font-size:13px;font-weight:500;z-index:999;transition:transform 0.3s ease;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* TABS */
+.tab-row{display:flex;gap:0;margin:0 24px 16px;background:var(--bg2);border-radius:14px;padding:3px;}
+.tab{flex:1;padding:9px;text-align:center;font-size:11px;font-weight:600;border-radius:11px;cursor:pointer;color:var(--ink-light);letter-spacing:0.3px;}
+.tab.on{background:var(--white);color:var(--ink);box-shadow:0 1px 6px rgba(28,28,30,0.08);}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+
+<!-- ══════════ SCREEN: HOME ══════════ -->
+<div class="screen active" id="screen-home">
+  <div class="status-bar">
+    <span class="time" id="clk1">—</span>
+    <div style="display:flex;gap:5px;font-size:13px;">📶 🔋</div>
+  </div>
+  <div class="header">
+    <div>
+      <div class="app-name-top">Suraksha <em>OS</em></div>
+      <div class="app-name-sub">Water Intelligence</div>
+    </div>
+    <div class="header-right">
+      <div class="live-badge"><div class="live-dot"></div><span id="data-mode-badge">Manual</span></div>
+      <div class="icon-btn" onclick="nav('alerts')">🔔<div class="badge" id="alert-badge">0</div></div>
+    </div>
+  </div>
+
+  <!-- Building Selector -->
+  <div class="bsel" id="bsel">
+    <div class="bsel-top" onclick="toggleBsel()">
+      <div class="bsel-left">
+        <div class="bsel-icon">🏢</div>
+        <div>
+          <div class="b-sub">Active Location</div>
+          <div class="b-path" id="bsel-path">—</div>
+        </div>
+      </div>
+      <div class="bsel-right">
+        <div class="bsel-expand" id="bsel-arrow">▾</div>
+      </div>
+    </div>
+    <div class="bsel-dropdown" id="bsel-dropdown">
+      <div id="bsel-list"></div>
+      <div class="floor-row" id="floor-row"></div>
+    </div>
+  </div>
+
+  <!-- Score -->
+  <div class="score-banner">
+    <div class="score-label">Overall Water Health</div>
+    <div class="score-row">
+      <div class="score-big" id="h-score">—<sup>%</sup></div>
+      <div class="score-right">
+        <div class="score-status" id="h-label">Calculating</div>
+        <div class="score-updated" id="h-updated">—</div>
+      </div>
+    </div>
+    <div class="score-bar-wrap"><div class="score-bar-fill" id="h-bar" style="width:0%"></div></div>
+  </div>
+
+  <!-- Sensor Mode Banner -->
+  <div class="sensor-bar" id="sensor-bar">
+    <div class="sensor-icon">📡</div>
+    <div class="sensor-text">
+      <div class="sensor-title" id="sensor-mode-title">Manual Input Mode</div>
+      <div class="sensor-sub" id="sensor-mode-sub">Tap to configure sensor auto-sync</div>
+    </div>
+    <div class="sensor-mode-btn" onclick="nav('settings')">Configure</div>
+  </div>
+
+  <div class="sec-header">
+    <div class="sec-title">Water Balance</div>
+    <div class="sec-link" onclick="nav('reports')">History →</div>
+  </div>
+
+  <div class="cards">
+    <div class="w-card fresh">
+      <div class="sensor-indicator" id="fresh-sensor-row" style="display:none;">
+        <div class="sensor-pulse"></div>
+        <span>Live sensor data · ID: <span id="fresh-sensor-id">—</span></span>
+      </div>
+      <div class="card-top">
+        <div class="card-left">
+          <div class="card-orb">🚰</div>
+          <div><div class="card-tag">Fresh Water</div><div class="card-name">Municipal Supply</div></div>
+        </div>
+        <div class="card-vol">
+          <div class="vol-main" id="fresh-vol">—</div>
+          <div class="vol-denom">of <span id="fresh-cap">—</span> L</div>
+        </div>
+      </div>
+      <div class="prog-row"><div class="prog-desc">Capacity</div><div class="prog-pct" id="fresh-pct">—</div></div>
+      <div class="prog-track"><div class="prog-fill" id="fresh-bar" style="width:0%"></div></div>
+      <div class="chips">
+        <div class="chip"><div class="chip-val g" id="fresh-in">—</div><div class="chip-lbl">Today In</div></div>
+        <div class="chip"><div class="chip-val a" id="fresh-out">—</div><div class="chip-lbl">Today Out</div></div>
+        <div class="chip"><div class="chip-val" id="fresh-reserve">—</div><div class="chip-lbl">Reserve</div></div>
+      </div>
+      <button class="edit-btn" id="fresh-edit-btn" onclick="openEdit('fresh')">✏️ Update Level</button>
+    </div>
+
+    <div class="w-card graywater">
+      <div class="sensor-indicator" id="gray-sensor-row" style="display:none;">
+        <div class="sensor-pulse"></div>
+        <span>Live sensor data · ID: <span id="gray-sensor-id">—</span></span>
+      </div>
+      <div class="card-top">
+        <div class="card-left">
+          <div class="card-orb">🔁</div>
+          <div><div class="card-tag">Gray Water</div><div class="card-name">Recycled Source</div></div>
+        </div>
+        <div class="card-vol">
+          <div class="vol-main" id="gray-vol">—</div>
+          <div class="vol-denom">of <span id="gray-cap">—</span> L</div>
+        </div>
+      </div>
+      <div class="prog-row"><div class="prog-desc">Capacity</div><div class="prog-pct" id="gray-pct">—</div></div>
+      <div class="prog-track"><div class="prog-fill" id="gray-bar" style="width:0%"></div></div>
+      <div class="chips">
+        <div class="chip"><div class="chip-val g" id="gray-recycled">—</div><div class="chip-lbl">Recycled</div></div>
+        <div class="chip"><div class="chip-val a" id="gray-tds">—</div><div class="chip-lbl">TDS ppm</div></div>
+        <div class="chip"><div class="chip-val" id="gray-filter">—</div><div class="chip-lbl">Filter</div></div>
+      </div>
+      <button class="edit-btn" id="gray-edit-btn" onclick="openEdit('gray')">✏️ Update Level</button>
+    </div>
+
+    <div class="w-card rain">
+      <div class="sensor-indicator" id="rain-sensor-row" style="display:none;">
+        <div class="sensor-pulse"></div>
+        <span>Live sensor data · ID: <span id="rain-sensor-id">—</span></span>
+      </div>
+      <div class="card-top">
+        <div class="card-left">
+          <div class="card-orb">🌧️</div>
+          <div><div class="card-tag">Rain Water</div><div class="card-name">Harvested</div></div>
+        </div>
+        <div class="card-vol">
+          <div class="vol-main" id="rain-vol">—</div>
+          <div class="vol-denom">of <span id="rain-cap">—</span> L</div>
+        </div>
+      </div>
+      <div class="prog-row"><div class="prog-desc">Capacity</div><div class="prog-pct" id="rain-pct">—</div></div>
+      <div class="prog-track"><div class="prog-fill" id="rain-bar" style="width:0%"></div></div>
+      <div class="chips">
+        <div class="chip"><div class="chip-val" id="rain-mm">—</div><div class="chip-lbl">Rainfall</div></div>
+        <div class="chip"><div class="chip-val g" id="rain-status">—</div><div class="chip-lbl">Status</div></div>
+        <div class="chip"><div class="chip-val" id="rain-next">—</div><div class="chip-lbl">Next Rain</div></div>
+      </div>
+      <button class="edit-btn" id="rain-edit-btn" onclick="openEdit('rain')">✏️ Update Level</button>
+    </div>
+  </div>
+
+  <!-- Totals -->
+  <div class="sec-header"><div class="sec-title">Today's Summary</div></div>
+  <div class="totals-wrap">
+    <div class="totals-card">
+      <div class="total-item"><div class="total-num" id="t-stored">—</div><div class="total-lbl">Stored</div><div class="total-sub">Litres</div></div>
+      <div class="total-item"><div class="total-num" id="t-cap">—</div><div class="total-lbl">Capacity</div><div class="total-sub">Max</div></div>
+      <div class="total-item"><div class="total-num" id="t-fill">—</div><div class="total-lbl">Fill Rate</div><div class="total-sub">All tanks</div></div>
+    </div>
+  </div>
+
+  <!-- Alerts preview -->
+  <div class="sec-header">
+    <div class="sec-title">Alerts</div>
+    <div class="sec-link" onclick="nav('alerts')">All →</div>
+  </div>
+  <div class="alerts-wrap" id="home-alerts"></div>
+</div>
+
+<!-- ══════════ SCREEN: REPORTS ══════════ -->
+<div class="screen" id="screen-reports">
+  <div class="status-bar"><span class="time" id="clk2">—</span><div style="font-size:13px;">📶 🔋</div></div>
+  <div class="page-title">Activity Log</div>
+  <div class="tab-row">
+    <div class="tab on" onclick="filterLog('all',this)">All</div>
+    <div class="tab" onclick="filterLog('fresh',this)">Fresh</div>
+    <div class="tab" onclick="filterLog('gray',this)">Gray</div>
+    <div class="tab" onclick="filterLog('rain',this)">Rain</div>
+  </div>
+  <div class="report-card">
+    <div class="report-card-title">Change History</div>
+    <div id="log-list"></div>
+  </div>
+  <div style="padding:0 24px;">
+    <button class="btn-danger" onclick="clearLogs()">🗑️ Clear All Logs</button>
+  </div>
+</div>
+
+<!-- ══════════ SCREEN: ALERTS ══════════ -->
+<div class="screen" id="screen-alerts">
+  <div class="status-bar"><span class="time" id="clk3">—</span><div style="font-size:13px;">📶 🔋</div></div>
+  <div class="page-title">Alerts</div>
+
+  <div class="sec-header" style="margin-top:0"><div class="sec-title">Set Low-Level Thresholds</div></div>
+  <div style="padding:0 24px;margin-bottom:20px;">
+    <div style="background:var(--white);border-radius:20px;padding:20px;box-shadow:0 2px 14px rgba(28,28,30,0.05);">
+      <div class="field">
+        <label>🚰 Fresh Water Alert Below (%)</label>
+        <input type="range" min="5" max="60" id="th-fresh" oninput="thLbl('fresh',this.value)" style="color:var(--fresh)">
+        <div class="range-display" style="color:var(--fresh)"><span id="th-fresh-v">20</span>%</div>
+      </div>
+      <div class="field">
+        <label>🔁 Gray Water Alert Below (%)</label>
+        <input type="range" min="5" max="60" id="th-gray" oninput="thLbl('gray',this.value)" style="color:var(--gray-w)">
+        <div class="range-display" style="color:var(--gray-w)"><span id="th-gray-v">20</span>%</div>
+      </div>
+      <div class="field">
+        <label>🌧️ Rain Water Alert Below (%)</label>
+        <input type="range" min="5" max="60" id="th-rain" oninput="thLbl('rain',this.value)" style="color:var(--rain)">
+        <div class="range-display" style="color:var(--rain)"><span id="th-rain-v">20</span>%</div>
+      </div>
+      <div class="field">
+        <label>⚠️ Gray Water TDS Limit (ppm)</label>
+        <input type="number" id="th-tds" placeholder="175">
+      </div>
+      <button class="btn-p" style="width:100%;margin-top:4px;" onclick="saveThresh()">Save Thresholds</button>
+    </div>
+  </div>
+
+  <div class="sec-header"><div class="sec-title">Active Alerts</div></div>
+  <div class="alerts-wrap" id="alerts-screen-list"></div>
+</div>
+
+<!-- ══════════ SCREEN: BUILDINGS ══════════ -->
+<div class="screen" id="screen-buildings">
+  <div class="status-bar"><span class="time" id="clk4">—</span><div style="font-size:13px;">📶 🔋</div></div>
+  <div class="page-title">Buildings & Floors</div>
+  <div class="building-list-screen" id="building-list-screen"></div>
+  <button class="add-btn" onclick="openAddBuilding()">＋ Add Building</button>
+</div>
+
+<!-- ══════════ SCREEN: SETTINGS ══════════ -->
+<div class="screen" id="screen-settings">
+  <div class="status-bar"><span class="time" id="clk5">—</span><div style="font-size:13px;">📶 🔋</div></div>
+  <div class="page-title">Settings</div>
+
+  <div class="setting-section">
+    <div class="setting-group-lbl">Sensor Configuration</div>
+    <div class="setting-item" onclick="openSensorConfig('fresh')">
+      <div class="setting-icon-wrap si-fresh">🚰</div>
+      <div class="setting-info">
+        <div class="setting-name">Fresh Water Sensor</div>
+        <div class="setting-val" id="set-fresh-sensor">Not configured</div>
+      </div>
+      <div class="setting-arrow">›</div>
+    </div>
+    <div class="setting-item" onclick="openSensorConfig('gray')">
+      <div class="setting-icon-wrap si-gray">🔁</div>
+      <div class="setting-info">
+        <div class="setting-name">Gray Water Sensor</div>
+        <div class="setting-val" id="set-gray-sensor">Not configured</div>
+      </div>
+      <div class="setting-arrow">›</div>
+    </div>
+    <div class="setting-item" onclick="openSensorConfig('rain')">
+      <div class="setting-icon-wrap si-rain">🌧️</div>
+      <div class="setting-info">
+        <div class="setting-name">Rain Water Sensor</div>
+        <div class="setting-val" id="set-rain-sensor">Not configured</div>
+      </div>
+      <div class="setting-arrow">›</div>
+    </div>
+  </div>
+
+  <div class="setting-section">
+    <div class="setting-group-lbl">Auto Sync</div>
+    <div style="background:var(--white);border-radius:14px;padding:6px 16px;box-shadow:0 1px 6px rgba(28,28,30,0.04);">
+      <div class="toggle-wrap">
+        <div class="toggle-label">Enable Auto Refresh</div>
+        <label class="toggle"><input type="checkbox" id="toggle-auto" onchange="toggleAuto(this)"><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+      </div>
+      <div class="toggle-wrap" style="border-top:1px solid var(--bg2);">
+        <div class="toggle-label">Alert Notifications</div>
+        <label class="toggle"><input type="checkbox" id="toggle-notif" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--ink-light);margin-top:8px;line-height:1.6;padding:0 4px;">
+      ℹ️ When sensors are configured with a real API endpoint or MQTT broker, Suraksha OS will auto-pull data at your chosen interval. Until then, manual entry is used.
+    </div>
+  </div>
+
+  <div class="setting-section">
+    <div class="setting-group-lbl">Sync Interval</div>
+    <div class="field" style="padding:0;">
+      <select id="sync-interval" onchange="saveSyncInterval(this.value)" style="background:var(--white);">
+        <option value="30">Every 30 seconds</option>
+        <option value="60" selected>Every 1 minute</option>
+        <option value="300">Every 5 minutes</option>
+        <option value="900">Every 15 minutes</option>
+        <option value="3600">Every 1 hour</option>
+      </select>
+    </div>
+  </div>
+
+  <div style="padding:0 24px;">
+    <button class="btn-danger" onclick="resetAll()">⚠️ Reset All Data</button>
+  </div>
+</div>
+
+<!-- ══════════ MODAL: EDIT WATER ══════════ -->
+<div class="overlay" id="m-edit">
+  <div class="modal">
+    <div class="handle"></div>
+    <div class="modal-title" id="m-edit-title">Update Water Level</div>
+    <div class="modal-sub" id="m-edit-sub">Adjust the slider or type exact value</div>
+    <div class="field">
+      <label id="m-slider-lbl">Volume (Litres)</label>
+      <input type="range" id="m-slider" min="0" max="6000" value="0" oninput="syncSlider(this.value)">
+      <div class="range-display" id="m-range-disp" style="color:var(--fresh)">0 L</div>
+    </div>
+    <div class="field">
+      <label>Or Enter Exact Value (L)</label>
+      <input type="number" id="m-input" placeholder="e.g. 3500" oninput="syncInput(this.value)">
+    </div>
+    <div id="m-extra-wrap">
+      <div class="field">
+        <label id="m-extra-lbl">Extra</label>
+        <input type="number" id="m-extra" placeholder="0">
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-s" onclick="closeOverlay('m-edit')">Cancel</button>
+      <button class="btn-p" onclick="saveEdit()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL: SENSOR CONFIG ══════════ -->
+<div class="overlay" id="m-sensor">
+  <div class="modal">
+    <div class="handle"></div>
+    <div class="modal-title" id="m-sensor-title">Sensor Setup</div>
+    <div class="modal-sub">Configure how Suraksha OS reads live data for this tank.</div>
+    <div class="sensor-config">
+      <div class="sensor-config-title">📡 How Sensor Integration Works</div>
+      <div class="sensor-config-sub">
+        Enter your sensor's API endpoint or Device ID. When a real sensor is connected, Suraksha OS will automatically pull readings at your sync interval — no manual entry needed.
+      </div>
+    </div>
+    <div class="field">
+      <label>Sensor / Device ID</label>
+      <input type="text" id="s-device-id" placeholder="e.g. SNS-TANK-001">
+    </div>
+    <div class="field">
+      <label>API Endpoint URL (optional)</label>
+      <input type="text" id="s-api-url" placeholder="https://your-iot-api.com/sensor/001">
+    </div>
+    <div class="field">
+      <label>Protocol</label>
+      <select id="s-protocol">
+        <option value="http">HTTP REST API</option>
+        <option value="mqtt">MQTT Broker</option>
+        <option value="manual">Manual (no sensor)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Tank Capacity (Litres)</label>
+      <input type="number" id="s-cap" placeholder="e.g. 6000">
+    </div>
+    <div class="btn-row">
+      <button class="btn-s" onclick="closeOverlay('m-sensor')">Cancel</button>
+      <button class="btn-p" onclick="saveSensorConfig()">Save Config</button>
+    </div>
+    <button class="btn-danger" onclick="clearSensorConfig()">Remove Sensor</button>
+  </div>
+</div>
+
+<!-- ══════════ MODAL: ADD BUILDING ══════════ -->
+<div class="overlay" id="m-building">
+  <div class="modal">
+    <div class="handle"></div>
+    <div class="modal-title">Add Building</div>
+    <div class="modal-sub">Add a building with multiple floors. Each floor has its own water tanks.</div>
+    <div class="field">
+      <label>Building Name</label>
+      <input type="text" id="ab-name" placeholder="e.g. Sunrise Apartments">
+    </div>
+    <div class="field">
+      <label>Number of Floors</label>
+      <select id="ab-floors">
+        <option value="1">1 Floor</option>
+        <option value="2">2 Floors</option>
+        <option value="3">3 Floors</option>
+        <option value="5">5 Floors</option>
+        <option value="10">10 Floors</option>
+        <option value="15">15 Floors</option>
+        <option value="20">20 Floors</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Fresh Water Tank Capacity (L)</label>
+      <input type="number" id="ab-fresh" placeholder="6000">
+    </div>
+    <div class="field">
+      <label>Gray Water Tank Capacity (L)</label>
+      <input type="number" id="ab-gray" placeholder="4000">
+    </div>
+    <div class="field">
+      <label>Rain Water Tank Capacity (L)</label>
+      <input type="number" id="ab-rain" placeholder="3000">
+    </div>
+    <div class="btn-row">
+      <button class="btn-s" onclick="closeOverlay('m-building')">Cancel</button>
+      <button class="btn-p" onclick="saveBuilding()">Add Building</button>
+    </div>
+  </div>
+</div>
+
+<div class="bnav">
+  <div class="nav-item on" id="nav-home" onclick="nav('home')"><div class="nav-icon">🏠</div><div class="nav-lbl">Home</div><div class="nav-dot"></div></div>
+  <div class="nav-item" id="nav-reports" onclick="nav('reports')"><div class="nav-icon">📋</div><div class="nav-lbl">Logs</div></div>
+  <div class="nav-item" id="nav-alerts" onclick="nav('alerts')"><div class="nav-icon">🔔</div><div class="nav-lbl">Alerts</div></div>
+  <div class="nav-item" id="nav-buildings" onclick="nav('buildings')"><div class="nav-icon">🏢</div><div class="nav-lbl">Buildings</div></div>
+  <div class="nav-item" id="nav-settings" onclick="nav('settings')"><div class="nav-icon">⚙️</div><div class="nav-lbl">Settings</div></div>
+</div>
+
+<script>
+// ══════════════════════════════════════
+// STORAGE
+// ══════════════════════════════════════
+const LS = {
+  get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+};
+
+// ── DEFAULTS ──
+const DEF_BUILDINGS = [{
+  id:'b1', name:'Prestige Tower',
+  floors: ['Ground Floor','Floor 1','Floor 2','Floor 3','Floor 4','Floor 5'],
+  freshCap:6000, grayCap:4000, rainCap:3000
+}];
+const DEF_WATER = {
+  'b1_Ground Floor': {fresh:4280,gray:1850,rain:920,freshIn:320,freshOut:540,grayTds:180,rainMm:0}
+};
+const DEF_THRESH = {fresh:20,gray:20,rain:20,tds:175};
+const DEF_SENSORS = {fresh:{id:'',url:'',protocol:'manual'},gray:{id:'',url:'',protocol:'manual'},rain:{id:'',url:'',protocol:'manual'}};
+const DEF_SETTINGS = {autoRefresh:false,syncInterval:60,notif:true};
+
+let buildings  = LS.get('sk2_buildings', DEF_BUILDINGS);
+let waterData  = LS.get('sk2_water', DEF_WATER);
+let thresh     = LS.get('sk2_thresh', DEF_THRESH);
+let sensors    = LS.get('sk2_sensors', DEF_SENSORS);
+let settings   = LS.get('sk2_settings', DEF_SETTINGS);
+let logs       = LS.get('sk2_logs', []);
+let activeId   = LS.get('sk2_activeId', 'b1');
+let activeFloor= LS.get('sk2_activeFloor', 'Ground Floor');
+let editingType= null;
+let editingSensorType = null;
+let logFilter  = 'all';
+let autoTimer  = null;
+
+function wkey(){ return activeId + '_' + activeFloor; }
+function getW(){
+  if(!waterData[wkey()]) waterData[wkey()]={fresh:0,gray:0,rain:0,freshIn:0,freshOut:0,grayTds:0,rainMm:0};
+  return waterData[wkey()];
+}
+function getB(){ return buildings.find(b=>b.id===activeId)||buildings[0]; }
+
+// ══════════════════════════════════════
+// RENDER HOME
+// ══════════════════════════════════════
+function renderHome(){
+  const b=getB(); const w=getW();
+  if(!b) return;
+
+  // Building selector path
+  document.getElementById('bsel-path').textContent = b.name + ' · ' + activeFloor;
+
+  // Sensor mode UI
+  const anyLive = ['fresh','gray','rain'].some(t=>sensors[t]&&sensors[t].protocol!=='manual'&&sensors[t].id);
+  document.getElementById('data-mode-badge').textContent = anyLive ? 'Sensor Live' : 'Manual';
+  document.getElementById('sensor-mode-title').textContent = anyLive ? '📡 Sensor Mode Active' : '✏️ Manual Input Mode';
+  document.getElementById('sensor-mode-sub').textContent = anyLive ? 'Data auto-syncing from configured sensors' : 'Tap Configure to set up IoT sensors';
+
+  // Cards
+  renderCard('fresh', w.fresh, b.freshCap, w.freshIn, w.freshOut);
+  renderCard('gray',  w.gray,  b.grayCap,  null, null, w.grayTds);
+  renderCard('rain',  w.rain,  b.rainCap,  null, null, null, w.rainMm);
+
+  // Sensor indicators
+  ['fresh','gray','rain'].forEach(t=>{
+    const s=sensors[t];
+    const row=document.getElementById(t+'-sensor-row');
+    const sidEl=document.getElementById(t+'-sensor-id');
+    if(s&&s.id&&s.protocol!=='manual'){
+      row.style.display='flex'; sidEl.textContent=s.id;
+      document.getElementById(t+'-edit-btn').textContent='🔄 Sync / Override';
+      document.getElementById(t+'-edit-btn').className='edit-btn sensor-mode';
+    } else {
+      row.style.display='none';
+      document.getElementById(t+'-edit-btn').textContent='✏️ Update Level';
+      document.getElementById(t+'-edit-btn').className='edit-btn';
+    }
+  });
+
+  // Health
+  const fP=pct(w.fresh,b.freshCap), gP=pct(w.gray,b.grayCap), rP=pct(w.rain,b.rainCap);
+  const h=Math.round((fP+gP+rP)/3);
+  document.getElementById('h-score').innerHTML=h+'<sup>%</sup>';
+  document.getElementById('h-bar').style.width=h+'%';
+  document.getElementById('h-label').textContent = h>=70?'✦ Good':h>=40?'⚠ Moderate':'⚠ Critical';
+  document.getElementById('h-updated').textContent='Updated '+ftime();
+
+  // Totals
+  const ts=w.fresh+w.gray+w.rain, tc=b.freshCap+b.grayCap+b.rainCap;
+  document.getElementById('t-stored').textContent=ts.toLocaleString()+'L';
+  document.getElementById('t-cap').textContent=tc.toLocaleString()+'L';
+  document.getElementById('t-fill').textContent=Math.round((ts/tc)*100)+'%';
+
+  renderAlerts();
+}
+
+function renderCard(type,vol,cap,inL,outL,tds,mm){
+  const p=pct(vol,cap);
+  const colors={fresh:'var(--fresh)',gray:'var(--gray-w)',rain:'var(--rain)'};
+  const col=colors[type];
+  document.getElementById(type+'-vol').textContent=vol.toLocaleString();
+  document.getElementById(type+'-cap').textContent=cap.toLocaleString();
+  document.getElementById(type+'-pct').textContent=p+'%';
+  document.getElementById(type+'-bar').style.width=p+'%';
+  if(type==='fresh'){
+    document.getElementById('fresh-in').textContent='+'+(inL||0)+'L';
+    document.getElementById('fresh-out').textContent='−'+(outL||0)+'L';
+    const r=outL>0?Math.round(vol/outL)+'d':'∞';
+    document.getElementById('fresh-reserve').textContent=r;
+  }
+  if(type==='gray'){
+    document.getElementById('gray-recycled').textContent='+'+vol+'L';
+    document.getElementById('gray-tds').textContent=(tds||0);
+    document.getElementById('gray-filter').textContent=(tds||0)>thresh.tds?'⚠ High':'✅ OK';
+  }
+  if(type==='rain'){
+    document.getElementById('rain-mm').textContent=(mm||0)+'mm';
+    document.getElementById('rain-status').textContent=p>20?'Clean':'Low';
+    document.getElementById('rain-next').textContent='Tue';
+  }
+}
+
+function pct(v,c){ return Math.min(100,Math.round((v/c)*100)); }
+
+// ══════════════════════════════════════
+// ALERTS
+// ══════════════════════════════════════
+function computeAlerts(){
+  const b=getB(); const w=getW(); if(!b) return [];
+  const a=[];
+  const fP=pct(w.fresh,b.freshCap), gP=pct(w.gray,b.grayCap), rP=pct(w.rain,b.rainCap);
+  if(fP<=thresh.fresh) a.push({type:'danger',icon:'🚨',title:'Fresh Water Critical',sub:`${b.name} · ${activeFloor} · Tank at ${fP}% (threshold ${thresh.fresh}%)`,time:'Now'});
+  if(gP<=thresh.gray)  a.push({type:'warn',  icon:'⚠️',title:'Gray Water Low',     sub:`${b.name} · ${activeFloor} · Tank at ${gP}% (threshold ${thresh.gray}%)`, time:'Now'});
+  if(rP<=thresh.rain)  a.push({type:'warn',  icon:'⚠️',title:'Rain Water Low',     sub:`${b.name} · ${activeFloor} · Tank at ${rP}% (threshold ${thresh.rain}%)`, time:'Now'});
+  if((w.grayTds||0)>thresh.tds) a.push({type:'warn',icon:'⚠️',title:'Gray TDS High',sub:`Reading ${w.grayTds}ppm — limit ${thresh.tds}ppm`,time:'Now'});
+  return a;
+}
+
+function renderAlerts(){
+  const a=computeAlerts();
+  document.getElementById('alert-badge').textContent=a.length;
+  const homeEl=document.getElementById('home-alerts');
+  if(!a.length){
+    homeEl.innerHTML='<div class="alert-item good"><div class="a-ico">✅</div><div class="a-body"><div class="a-title">All Systems Normal</div><div class="a-sub">No active alerts for this location.</div></div></div>';
+  } else {
+    homeEl.innerHTML=a.slice(0,2).map(aHTML).join('');
+  }
+  // Alerts screen
+  const screenEl=document.getElementById('alerts-screen-list');
+  if(screenEl){
+    screenEl.innerHTML=a.length?a.map(x=>`<div style="padding:0 24px 0">${aHTML(x)}</div>`).join(''):
+    '<div style="padding:0 24px"><div class="alert-item good"><div class="a-ico">✅</div><div class="a-body"><div class="a-title">No Active Alerts</div><div class="a-sub">All tanks above thresholds.</div></div></div></div>';
+  }
+}
+function aHTML(a){return`<div class="alert-item ${a.type}"><div class="a-ico">${a.icon}</div><div class="a-body"><div class="a-title">${a.title}</div><div class="a-sub">${a.sub}</div><div class="a-time">${a.time}</div></div></div>`;}
+
+// ══════════════════════════════════════
+// BUILDING SELECTOR DROPDOWN
+// ══════════════════════════════════════
+function toggleBsel(){
+  const dd=document.getElementById('bsel-dropdown');
+  const arr=document.getElementById('bsel-arrow');
+  const open=dd.classList.toggle('open');
+  arr.classList.toggle('open',open);
+  if(open) renderBselList();
+}
+
+function renderBselList(){
+  const list=document.getElementById('bsel-list');
+  list.innerHTML=buildings.map(b=>`
+    <div class="bsel-item ${b.id===activeId?'sel':''}" onclick="selectBuilding('${b.id}')">
+      <div class="bsel-item-icon">🏢</div>
+      <div>
+        <div class="bsel-item-name">${b.name}</div>
+        <div class="bsel-item-sub">${b.floors.length} floors</div>
+      </div>
+      ${b.id===activeId?'<div class="bsel-check">✓</div>':''}
+    </div>
+  `).join('');
+  renderFloorRow();
+}
+
+function renderFloorRow(){
+  const b=getB(); if(!b) return;
+  const row=document.getElementById('floor-row');
+  row.innerHTML=b.floors.map(f=>`
+    <div class="floor-chip ${f===activeFloor?'sel':''}" onclick="selectFloor('${f}')">${f}</div>
+  `).join('');
+}
+
+function selectBuilding(id){
+  activeId=id;
+  const b=buildings.find(x=>x.id===id);
+  activeFloor=b&&b.floors.length?b.floors[0]:'Ground Floor';
+  LS.set('sk2_activeId',activeId);
+  LS.set('sk2_activeFloor',activeFloor);
+  renderBselList();
+  renderHome();
+}
+
+function selectFloor(f){
+  activeFloor=f;
+  LS.set('sk2_activeFloor',activeFloor);
+  renderFloorRow();
+  renderBselList();
+  renderHome();
+  toggleBsel();
+  showToast('📍 '+f+' selected');
+}
+
+// ══════════════════════════════════════
+// ADD BUILDING
+// ══════════════════════════════════════
+function openAddBuilding(){
+  ['ab-name'].forEach(id=>document.getElementById(id).value='');
+  openOverlay('m-building');
+}
+function saveBuilding(){
+  const name=document.getElementById('ab-name').value.trim();
+  if(!name){showToast('⚠️ Enter building name');return;}
+  const numFloors=parseInt(document.getElementById('ab-floors').value)||1;
+  const fCap=parseInt(document.getElementById('ab-fresh').value)||6000;
+  const gCap=parseInt(document.getElementById('ab-gray').value)||4000;
+  const rCap=parseInt(document.getElementById('ab-rain').value)||3000;
+  const floors=[];
+  for(let i=0;i<numFloors;i++) floors.push(i===0?'Ground Floor':i===1?'Floor 1':'Floor '+i);
+  const id='b'+Date.now();
+  buildings.push({id,name,floors,freshCap:fCap,grayCap:gCap,rainCap:rCap});
+  LS.set('sk2_buildings',buildings);
+  addLog('Building added',name+' · '+numFloors+' floor(s)','var(--fresh)','all');
+  closeOverlay('m-building');
+  renderBuildingScreen();
+  showToast('✅ '+name+' added!');
+}
+function deleteBuilding(id){
+  if(buildings.length<=1){showToast('⚠️ Cannot delete last building');return;}
+  buildings=buildings.filter(b=>b.id!==id);
+  if(activeId===id){ activeId=buildings[0].id; activeFloor=buildings[0].floors[0]; }
+  LS.set('sk2_buildings',buildings);
+  renderBuildingScreen();
+  renderHome();
+  showToast('🗑️ Building removed');
+}
+function renderBuildingScreen(){
+  const el=document.getElementById('building-list-screen');
+  el.innerHTML=buildings.map(b=>`
+    <div class="bc ${b.id===activeId?'sel':''}">
+      <div class="bc-emoji">🏢</div>
+      <div class="bc-body">
+        <div class="bc-name">${b.name}</div>
+        <div class="bc-sub">${b.freshCap}L / ${b.grayCap}L / ${b.rainCap}L caps</div>
+        <div class="bc-floors">${b.floors.map(f=>`<div class="bc-floor-tag">${f}</div>`).join('')}</div>
+      </div>
+      <div class="bc-actions">
+        <button class="bc-sel-btn" onclick="selectBuilding('${b.id}');nav('home')">Select</button>
+        ${b.id!=='b1'?`<button class="bc-del-btn" onclick="deleteBuilding('${b.id}')">Remove</button>`:''}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ══════════════════════════════════════
+// EDIT WATER LEVEL
+// ══════════════════════════════════════
+function openEdit(type){
+  editingType=type;
+  const b=getB(); const w=getW();
+  const caps={fresh:b.freshCap,gray:b.grayCap,rain:b.rainCap};
+  const cur ={fresh:w.fresh,gray:w.gray,rain:w.rain};
+  const names={fresh:'Fresh Water 🚰',gray:'Gray Water 🔁',rain:'Rain Water 🌧️'};
+  const colors={fresh:'var(--fresh)',gray:'var(--gray-w)',rain:'var(--rain)'};
+
+  document.getElementById('m-edit-title').textContent='Update '+names[type];
+  document.getElementById('m-edit-sub').textContent='Tank capacity: '+caps[type].toLocaleString()+' L · '+b.name+' · '+activeFloor;
+  document.getElementById('m-slider').max=caps[type];
+  document.getElementById('m-slider').value=cur[type];
+  document.getElementById('m-slider').style.color=colors[type];
+  document.getElementById('m-range-disp').style.color=colors[type];
+  document.getElementById('m-input').value=cur[type];
+  document.getElementById('m-range-disp').textContent=cur[type].toLocaleString()+' L';
+  updateSliderBg(document.getElementById('m-slider'),cur[type],caps[type],type);
+
+  const extra=document.getElementById('m-extra-wrap');
+  if(type==='fresh'){
+    extra.style.display='block';
+    document.getElementById('m-extra-lbl').textContent='Outflow Today (L)';
+    document.getElementById('m-extra').value=w.freshOut||0;
+  } else if(type==='gray'){
+    extra.style.display='block';
+    document.getElementById('m-extra-lbl').textContent='TDS Reading (ppm)';
+    document.getElementById('m-extra').value=w.grayTds||0;
+  } else if(type==='rain'){
+    extra.style.display='block';
+    document.getElementById('m-extra-lbl').textContent='Rainfall Today (mm)';
+    document.getElementById('m-extra').value=w.rainMm||0;
+  } else {
+    extra.style.display='none';
+  }
+  openOverlay('m-edit');
+}
+
+function syncSlider(v){
+  document.getElementById('m-input').value=v;
+  document.getElementById('m-range-disp').textContent=parseInt(v).toLocaleString()+' L';
+  const b=getB();
+  const caps={fresh:b.freshCap,gray:b.grayCap,rain:b.rainCap};
+  updateSliderBg(document.getElementById('m-slider'),v,caps[editingType],editingType);
+}
+function syncInput(v){
+  const b=getB();
+  const caps={fresh:b.freshCap,gray:b.grayCap,rain:b.rainCap};
+  const c=Math.min(Math.max(0,parseInt(v)||0),caps[editingType]);
+  document.getElementById('m-slider').value=c;
+  document.getElementById('m-range-disp').textContent=c.toLocaleString()+' L';
+  updateSliderBg(document.getElementById('m-slider'),c,caps[editingType],editingType);
+}
+function updateSliderBg(el,v,max,type){
+  const p=(v/max)*100;
+  const c={fresh:['#1A6B72','#C2DFE2'],gray:['#C4785A','#E8C5B4'],rain:['#4A7C8E','#B8D0D9']};
+  const [c1,c2]=c[type]||c.fresh;
+  el.style.background=`linear-gradient(to right,${c1} 0%,${c1} ${p}%,${c2} ${p}%,${c2} 100%)`;
+}
+
+function saveEdit(){
+  const val=Math.max(0,parseInt(document.getElementById('m-input').value)||0);
+  const extra=parseInt(document.getElementById('m-extra').value)||0;
+  const b=getB();
+  const caps={fresh:b.freshCap,gray:b.grayCap,rain:b.rainCap};
+  const clamped=Math.min(val,caps[editingType]);
+  const w=getW(); const old=w[editingType];
+  w[editingType]=clamped;
+  if(editingType==='fresh'){w.freshIn=Math.max(0,clamped-old);w.freshOut=extra;}
+  if(editingType==='gray') w.grayTds=extra;
+  if(editingType==='rain') w.rainMm=extra;
+  waterData[wkey()]=w;
+  LS.set('sk2_water',waterData);
+  const names={fresh:'Fresh Water',gray:'Gray Water',rain:'Rain Water'};
+  const colors={fresh:'var(--fresh)',gray:'var(--gray-w)',rain:'var(--rain)'};
+  addLog(`${names[editingType]} updated`,`${old.toLocaleString()}L → ${clamped.toLocaleString()}L · ${getB().name} · ${activeFloor}`,colors[editingType],editingType);
+  closeOverlay('m-edit');
+  renderHome();
+  showToast('✅ Saved!');
+}
+
+// ══════════════════════════════════════
+// SENSOR CONFIG
+// ══════════════════════════════════════
+function openSensorConfig(type){
+  editingSensorType=type;
+  const s=sensors[type]||{id:'',url:'',protocol:'manual'};
+  const names={fresh:'Fresh Water 🚰',gray:'Gray Water 🔁',rain:'Rain Water 🌧️'};
+  document.getElementById('m-sensor-title').textContent=names[type]+' Sensor';
+  document.getElementById('s-device-id').value=s.id||'';
+  document.getElementById('s-api-url').value=s.url||'';
+  document.getElementById('s-protocol').value=s.protocol||'manual';
+  document.getElementById('s-cap').value=
+    editingSensorType==='fresh'?getB().freshCap:editingSensorType==='gray'?getB().grayCap:getB().rainCap;
+  openOverlay('m-sensor');
+}
+function saveSensorConfig(){
+  const type=editingSensorType;
+  sensors[type]={
+    id:document.getElementById('s-device-id').value.trim(),
+    url:document.getElementById('s-api-url').value.trim(),
+    protocol:document.getElementById('s-protocol').value
+  };
+  const cap=parseInt(document.getElementById('s-cap').value)||6000;
+  const b=getB();
+  if(type==='fresh') b.freshCap=cap;
+  if(type==='gray')  b.grayCap=cap;
+  if(type==='rain')  b.rainCap=cap;
+  LS.set('sk2_sensors',sensors);
+  LS.set('sk2_buildings',buildings);
+  updateSettingsScreen();
+  addLog('Sensor configured',`${type} — ID: ${sensors[type].id||'none'} · Protocol: ${sensors[type].protocol}`,'var(--sensor)','all');
+  closeOverlay('m-sensor');
+  renderHome();
+  showToast('📡 Sensor config saved!');
+}
+function clearSensorConfig(){
+  sensors[editingSensorType]={id:'',url:'',protocol:'manual'};
+  LS.set('sk2_sensors',sensors);
+  updateSettingsScreen();
+  closeOverlay('m-sensor');
+  renderHome();
+  showToast('🗑️ Sensor removed');
+}
+function updateSettingsScreen(){
+  ['fresh','gray','rain'].forEach(t=>{
+    const s=sensors[t]; const el=document.getElementById('set-'+t+'-sensor');
+    if(el) el.textContent=s&&s.id?`ID: ${s.id} · ${s.protocol}`:'Not configured';
+  });
+  // Auto toggle
+  const ta=document.getElementById('toggle-auto');
+  if(ta) ta.checked=settings.autoRefresh;
+  const si=document.getElementById('sync-interval');
+  if(si) si.value=settings.syncInterval;
+}
+
+function toggleAuto(el){
+  settings.autoRefresh=el.checked;
+  LS.set('sk2_settings',settings);
+  if(el.checked) startAutoSync();
+  else stopAutoSync();
+  showToast(el.checked?'🔄 Auto-sync ON':'⏸ Auto-sync OFF');
+}
+function saveSyncInterval(v){
+  settings.syncInterval=parseInt(v);
+  LS.set('sk2_settings',settings);
+  if(settings.autoRefresh){stopAutoSync();startAutoSync();}
+}
+
+// ── SENSOR SIMULATION (when auto is on, simulate small changes) ──
+function startAutoSync(){
+  stopAutoSync();
+  autoTimer=setInterval(()=>{
+    // Only simulate if a sensor is configured (not manual)
+    const hasLive=['fresh','gray','rain'].some(t=>sensors[t]&&sensors[t].protocol!=='manual'&&sensors[t].id);
+    if(!hasLive) return;
+    const w=getW(); const b=getB();
+    // Tiny realistic fluctuation ±30L per interval
+    ['fresh','gray','rain'].forEach(t=>{
+      const s=sensors[t];
+      if(s&&s.id&&s.protocol!=='manual'){
+        const cap=t==='fresh'?b.freshCap:t==='gray'?b.grayCap:b.rainCap;
+        const delta=Math.floor(Math.random()*60)-30;
+        w[t]=Math.min(cap,Math.max(0,(w[t]||0)+delta));
+      }
+    });
+    waterData[wkey()]=w;
+    LS.set('sk2_water',waterData);
+    if(document.getElementById('screen-home').classList.contains('active')) renderHome();
+  }, settings.syncInterval*1000);
+}
+function stopAutoSync(){ if(autoTimer){clearInterval(autoTimer);autoTimer=null;} }
+
+// ══════════════════════════════════════
+// THRESHOLDS
+// ══════════════════════════════════════
+function thLbl(type,v){
+  document.getElementById('th-'+type+'-v').textContent=v;
+  const el=document.getElementById('th-'+type);
+  const min=5,max=60,p=((v-min)/(max-min))*100;
+  const c={fresh:['#1A6B72','#C2DFE2'],gray:['#C4785A','#E8C5B4'],rain:['#4A7C8E','#B8D0D9']};
+  const [c1,c2]=c[type];
+  el.style.background=`linear-gradient(to right,${c1} 0%,${c1} ${p}%,${c2} ${p}%,${c2} 100%)`;
+}
+function loadThreshUI(){
+  ['fresh','gray','rain'].forEach(t=>{
+    const el=document.getElementById('th-'+t);
+    if(el){el.value=thresh[t];thLbl(t,thresh[t]);}
+  });
+  const tds=document.getElementById('th-tds');
+  if(tds) tds.value=thresh.tds;
+}
+function saveThresh(){
+  thresh.fresh=parseInt(document.getElementById('th-fresh').value);
+  thresh.gray =parseInt(document.getElementById('th-gray').value);
+  thresh.rain =parseInt(document.getElementById('th-rain').value);
+  thresh.tds  =parseInt(document.getElementById('th-tds').value)||175;
+  LS.set('sk2_thresh',thresh);
+  addLog('Thresholds saved',`F:${thresh.fresh}% G:${thresh.gray}% R:${thresh.rain}% TDS:${thresh.tds}ppm`,'var(--amber)','all');
+  renderAlerts();
+  showToast('✅ Thresholds saved!');
+}
+
+// ══════════════════════════════════════
+// LOGS
+// ══════════════════════════════════════
+function addLog(action,detail,color,type){
+  logs.unshift({action,detail,color,type,time:ftime(),date:fdate()});
+  if(logs.length>100) logs.pop();
+  LS.set('sk2_logs',logs);
+}
+function renderLogs(){
+  const el=document.getElementById('log-list');
+  const filtered=logFilter==='all'?logs:logs.filter(l=>l.type===logFilter);
+  if(!filtered.length){el.innerHTML='<div class="no-data">No logs yet.<br>Update a water level to see history.</div>';return;}
+  el.innerHTML=filtered.map(l=>`
+    <div class="log-item">
+      <div class="log-dot" style="background:${l.color}"></div>
+      <div class="log-text"><div class="log-action">${l.action}</div><div class="log-detail">${l.detail}</div></div>
+      <div class="log-time">${l.time}<br><span style="color:var(--ink-xlt)">${l.date}</span></div>
+    </div>
+  `).join('');
+}
+function filterLog(type,el){
+  logFilter=type;
+  document.querySelectorAll('.tab-row .tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  renderLogs();
+}
+function clearLogs(){ logs=[];LS.set('sk2_logs',logs);renderLogs();showToast('🗑️ Logs cleared'); }
+
+// ══════════════════════════════════════
+// NAV
+// ══════════════════════════════════════
+function nav(tab){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>{n.classList.remove('on');const d=n.querySelector('.nav-dot');if(d)d.remove();});
+  document.getElementById('screen-'+tab).classList.add('active');
+  const ni=document.getElementById('nav-'+tab);
+  if(ni){ ni.classList.add('on'); const d=document.createElement('div');d.className='nav-dot';ni.appendChild(d); }
+  if(tab==='home') renderHome();
+  if(tab==='reports'){renderLogs();}
+  if(tab==='alerts'){loadThreshUI();renderAlerts();}
+  if(tab==='buildings') renderBuildingScreen();
+  if(tab==='settings') updateSettingsScreen();
+  // Close bsel dropdown if open
+  document.getElementById('bsel-dropdown').classList.remove('open');
+  document.getElementById('bsel-arrow').classList.remove('open');
+}
+
+// ══════════════════════════════════════
+// OVERLAYS
+// ══════════════════════════════════════
+function openOverlay(id){ document.getElementById(id).classList.add('open'); }
+function closeOverlay(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.overlay').forEach(o=>{
+  o.addEventListener('click',function(e){ if(e.target===this) this.classList.remove('open'); });
+});
+
+// ══════════════════════════════════════
+// RESET
+// ══════════════════════════════════════
+function resetAll(){
+  if(!confirm('Reset all data? This cannot be undone.')) return;
+  ['sk2_buildings','sk2_water','sk2_thresh','sk2_sensors','sk2_settings','sk2_logs','sk2_activeId','sk2_activeFloor'].forEach(k=>localStorage.removeItem(k));
+  location.reload();
+}
+
+// ══════════════════════════════════════
+// CLOCK
+// ══════════════════════════════════════
+function ftime(){ return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); }
+function fdate(){ return new Date().toLocaleDateString([],{day:'numeric',month:'short'}); }
+function tick(){ const t=ftime(); ['clk1','clk2','clk3','clk4','clk5'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=t;}); }
+tick(); setInterval(tick,10000);
+
+// ══════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════
+let _tt; function showToast(msg){ const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2500); }
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+renderHome();
+if(settings.autoRefresh) startAutoSync();
+</script>
+</body>
+</html>
