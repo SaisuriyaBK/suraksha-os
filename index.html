@@ -9,7 +9,6 @@
 :root {
   --bg:#F7F4EF; --bg2:#EFEAE1; --bg3:#E5DED3;
   --fresh:#1A6B72; --fresh-lt:#EAF4F5; --fresh-mid:#C2DFE2;
-  --gray-w:#C4785A; --gray-lt:#F6EDE8; --gray-mid:#E8C5B4;
   --rain:#4A7C8E; --rain-lt:#E8F0F3; --rain-mid:#B8D0D9;
   --amber:#D47A2A; --amber-lt:#FDF2E5;
   --ink:#1C1C1E; --ink-mid:#5C5C6E; --ink-light:#9A9AAD; --ink-xlt:#C8C8D8;
@@ -49,7 +48,6 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
 .bsel-right{display:flex;align-items:center;gap:8px;}
 .bsel-expand{width:26px;height:26px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--ink-light);font-size:11px;transition:transform 0.2s;}
 .bsel-expand.open{transform:rotate(180deg);}
-/* Dropdown */
 .bsel-dropdown{display:none;border-top:1px solid var(--bg2);}
 .bsel-dropdown.open{display:block;}
 .bsel-item{padding:13px 18px;display:flex;align-items:center;gap:12px;cursor:pointer;border-bottom:1px solid var(--bg2);}
@@ -60,7 +58,6 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
 .bsel-item-name{font-size:13px;font-weight:600;flex:1;}
 .bsel-item-sub{font-size:11px;color:var(--ink-light);}
 .bsel-check{color:var(--fresh);font-size:16px;}
-/* Floor selector */
 .floor-row{padding:10px 18px;display:flex;gap:6px;flex-wrap:wrap;border-top:1px solid var(--bg2);background:var(--bg);}
 .floor-chip{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid var(--bg3);background:var(--white);}
 .floor-chip.sel{background:var(--fresh);color:white;border-color:var(--fresh);}
@@ -97,38 +94,31 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
 .w-card{background:var(--white);border-radius:20px;padding:18px 18px 14px;box-shadow:0 2px 14px rgba(28,28,30,0.05);border:1px solid rgba(28,28,30,0.04);position:relative;overflow:hidden;}
 .w-card::before{content:'';position:absolute;left:0;top:18%;bottom:18%;width:4px;border-radius:0 4px 4px 0;}
 .w-card.fresh::before{background:var(--fresh);}
-.w-card.graywater::before{background:var(--gray-w);}
 .w-card.rain::before{background:var(--rain);}
 .card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
 .card-left{display:flex;align-items:center;gap:10px;}
 .card-orb{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
 .fresh .card-orb{background:var(--fresh-lt);}
-.graywater .card-orb{background:var(--gray-lt);}
 .rain .card-orb{background:var(--rain-lt);}
 .card-tag{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:2px;}
 .fresh .card-tag{color:var(--fresh);}
-.graywater .card-tag{color:var(--gray-w);}
 .rain .card-tag{color:var(--rain);}
 .card-name{font-family:'DM Serif Display',serif;font-size:16px;color:var(--ink);}
 .card-vol{text-align:right;}
 .vol-main{font-family:'DM Serif Display',serif;font-size:26px;line-height:1;letter-spacing:-1px;}
 .fresh .vol-main{color:var(--fresh);}
-.graywater .vol-main{color:var(--gray-w);}
 .rain .vol-main{color:var(--rain);}
 .vol-denom{font-size:10px;color:var(--ink-light);margin-top:2px;}
 .prog-row{display:flex;justify-content:space-between;margin-bottom:6px;}
 .prog-desc{font-size:11px;color:var(--ink-mid);}
 .prog-pct{font-size:11px;font-weight:600;}
 .fresh .prog-pct{color:var(--fresh);}
-.graywater .prog-pct{color:var(--gray-w);}
 .rain .prog-pct{color:var(--rain);}
 .prog-track{height:6px;border-radius:10px;margin-bottom:12px;}
 .fresh .prog-track{background:var(--fresh-mid);}
-.graywater .prog-track{background:var(--gray-mid);}
 .rain .prog-track{background:var(--rain-mid);}
 .prog-fill{height:100%;border-radius:10px;transition:width 0.7s ease;}
 .fresh .prog-fill{background:var(--fresh);}
-.graywater .prog-fill{background:var(--gray-w);}
 .rain .prog-fill{background:var(--rain);}
 .chips{display:flex;gap:6px;margin-bottom:10px;}
 .chip{flex:1;background:var(--bg);border-radius:10px;padding:8px 4px;text-align:center;}
@@ -138,7 +128,6 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
 .chip-val.r{color:var(--danger);}
 .chip-val.s{color:var(--sensor);}
 .chip-lbl{font-size:9px;color:var(--ink-light);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px;font-weight:500;}
-/* sensor indicator on card */
 .sensor-indicator{display:flex;align-items:center;gap:6px;margin-bottom:10px;padding:6px 10px;background:var(--sensor-lt);border-radius:8px;}
 .sensor-indicator span{font-size:10px;color:var(--sensor);font-weight:500;}
 .sensor-pulse{width:6px;height:6px;border-radius:50%;background:var(--sensor);animation:breathe 1.5s ease-in-out infinite;}
@@ -204,22 +193,42 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
 .sensor-config{background:var(--sensor-lt);border:1px solid rgba(107,53,163,0.15);border-radius:16px;padding:16px;margin-bottom:16px;}
 .sensor-config-title{font-size:13px;font-weight:600;color:var(--sensor);margin-bottom:4px;}
 .sensor-config-sub{font-size:11px;color:var(--ink-mid);line-height:1.5;margin-bottom:12px;}
-.sensor-config .field label{color:var(--sensor);}
 
 /* PAGE TITLE */
 .page-title{font-family:'DM Serif Display',serif;font-size:24px;padding:8px 24px 18px;color:var(--ink);}
 
-/* REPORTS */
+/* CHARTS SCREEN */
+.chart-card{background:var(--white);border-radius:20px;padding:20px;margin:0 24px 16px;box-shadow:0 2px 14px rgba(28,28,30,0.04);}
+.chart-card-title{font-family:'DM Serif Display',serif;font-size:17px;margin-bottom:4px;color:var(--ink);}
+.chart-card-sub{font-size:11px;color:var(--ink-light);margin-bottom:18px;}
+.chart-legend{display:flex;gap:16px;margin-bottom:14px;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--ink-mid);}
+.legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+.chart-area{position:relative;height:180px;}
+.chart-bars{display:flex;align-items:flex-end;gap:4px;height:150px;padding:0 4px;}
+.month-group{flex:1;display:flex;align-items:flex-end;gap:2px;}
+.bar{border-radius:5px 5px 0 0;min-height:3px;transition:height 0.5s ease;cursor:pointer;position:relative;}
+.bar:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--ink);color:white;font-size:10px;font-weight:600;padding:4px 8px;border-radius:7px;white-space:nowrap;pointer-events:none;z-index:10;}
+.bar.fresh-bar{background:var(--fresh);}
+.bar.rain-bar{background:var(--rain);}
+.bar.fresh-bar:hover{background:#145a60;}
+.bar.rain-bar:hover{background:#3a6a7a;}
+.month-labels{display:flex;gap:4px;padding:6px 4px 0;border-top:1px solid var(--bg2);}
+.month-lbl{flex:1;text-align:center;font-size:9px;font-weight:600;color:var(--ink-xlt);text-transform:uppercase;letter-spacing:0.3px;}
+.chart-y-axis{position:absolute;left:0;top:0;height:150px;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none;}
+.y-lbl{font-size:9px;color:var(--ink-xlt);font-weight:500;}
+.chart-summary-row{display:flex;gap:8px;margin-top:16px;}
+.chart-stat{flex:1;background:var(--bg);border-radius:12px;padding:12px;text-align:center;}
+.chart-stat-val{font-family:'DM Serif Display',serif;font-size:18px;color:var(--ink);}
+.chart-stat-lbl{font-size:10px;color:var(--ink-light);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-top:2px;}
+.chart-tabs{display:flex;gap:0;margin:0 24px 14px;background:var(--bg2);border-radius:14px;padding:3px;}
+.chart-tab{flex:1;padding:9px;text-align:center;font-size:11px;font-weight:600;border-radius:11px;cursor:pointer;color:var(--ink-light);}
+.chart-tab.on{background:var(--white);color:var(--ink);box-shadow:0 1px 6px rgba(28,28,30,0.08);}
+.no-chart-data{text-align:center;padding:40px 16px;color:var(--ink-light);font-size:13px;line-height:1.7;}
+.no-chart-data .big{font-size:36px;margin-bottom:8px;}
+
+/* ALERTS */
 .report-card{background:var(--white);border-radius:20px;padding:18px;margin:0 24px 14px;box-shadow:0 2px 14px rgba(28,28,30,0.04);}
-.report-card-title{font-family:'DM Serif Display',serif;font-size:17px;margin-bottom:14px;}
-.log-item{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--bg2);}
-.log-item:last-child{border-bottom:none;}
-.log-dot{width:9px;height:9px;border-radius:50%;margin-top:4px;flex-shrink:0;}
-.log-text{flex:1;}
-.log-action{font-size:13px;font-weight:500;}
-.log-detail{font-size:11px;color:var(--ink-light);margin-top:1px;}
-.log-time{font-size:10px;color:var(--ink-xlt);text-align:right;flex-shrink:0;}
-.no-data{text-align:center;padding:24px;color:var(--ink-light);font-size:13px;line-height:1.6;}
 
 /* SETTINGS */
 .setting-section{margin:0 24px 20px;}
@@ -228,7 +237,6 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
 .setting-item:active{background:var(--bg2);}
 .setting-icon-wrap{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:17px;}
 .si-fresh{background:var(--fresh-lt);}
-.si-gray{background:var(--gray-lt);}
 .si-rain{background:var(--rain-lt);}
 .si-sensor{background:var(--sensor-lt);}
 .si-general{background:var(--bg2);}
@@ -265,11 +273,6 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
 /* TOAST */
 .toast{position:fixed;top:60px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--ink);color:white;padding:11px 20px;border-radius:13px;font-size:13px;font-weight:500;z-index:999;transition:transform 0.3s ease;white-space:nowrap;}
 .toast.show{transform:translateX(-50%) translateY(0);}
-
-/* TABS */
-.tab-row{display:flex;gap:0;margin:0 24px 16px;background:var(--bg2);border-radius:14px;padding:3px;}
-.tab{flex:1;padding:9px;text-align:center;font-size:11px;font-weight:600;border-radius:11px;cursor:pointer;color:var(--ink-light);letter-spacing:0.3px;}
-.tab.on{background:var(--white);color:var(--ink);box-shadow:0 1px 6px rgba(28,28,30,0.08);}
 </style>
 </head>
 <body>
@@ -292,7 +295,6 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
     </div>
   </div>
 
-  <!-- Building Selector -->
   <div class="bsel" id="bsel">
     <div class="bsel-top" onclick="toggleBsel()">
       <div class="bsel-left">
@@ -312,7 +314,6 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
     </div>
   </div>
 
-  <!-- Score -->
   <div class="score-banner">
     <div class="score-label">Overall Water Health</div>
     <div class="score-row">
@@ -325,7 +326,6 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
     <div class="score-bar-wrap"><div class="score-bar-fill" id="h-bar" style="width:0%"></div></div>
   </div>
 
-  <!-- Sensor Mode Banner -->
   <div class="sensor-bar" id="sensor-bar">
     <div class="sensor-icon">📡</div>
     <div class="sensor-text">
@@ -337,10 +337,11 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
 
   <div class="sec-header">
     <div class="sec-title">Water Balance</div>
-    <div class="sec-link" onclick="nav('reports')">History →</div>
+    <div class="sec-link" onclick="nav('reports')">Charts →</div>
   </div>
 
   <div class="cards">
+    <!-- FRESH / CORPORATION WATER -->
     <div class="w-card fresh">
       <div class="sensor-indicator" id="fresh-sensor-row" style="display:none;">
         <div class="sensor-pulse"></div>
@@ -349,7 +350,7 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
       <div class="card-top">
         <div class="card-left">
           <div class="card-orb">🚰</div>
-          <div><div class="card-tag">Fresh Water</div><div class="card-name">Municipal Supply</div></div>
+          <div><div class="card-tag">Corporation Water</div><div class="card-name">Municipal Supply</div></div>
         </div>
         <div class="card-vol">
           <div class="vol-main" id="fresh-vol">—</div>
@@ -366,31 +367,7 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
       <button class="edit-btn" id="fresh-edit-btn" onclick="openEdit('fresh')">✏️ Update Level</button>
     </div>
 
-    <div class="w-card graywater">
-      <div class="sensor-indicator" id="gray-sensor-row" style="display:none;">
-        <div class="sensor-pulse"></div>
-        <span>Live sensor data · ID: <span id="gray-sensor-id">—</span></span>
-      </div>
-      <div class="card-top">
-        <div class="card-left">
-          <div class="card-orb">🔁</div>
-          <div><div class="card-tag">Gray Water</div><div class="card-name">Recycled Source</div></div>
-        </div>
-        <div class="card-vol">
-          <div class="vol-main" id="gray-vol">—</div>
-          <div class="vol-denom">of <span id="gray-cap">—</span> L</div>
-        </div>
-      </div>
-      <div class="prog-row"><div class="prog-desc">Capacity</div><div class="prog-pct" id="gray-pct">—</div></div>
-      <div class="prog-track"><div class="prog-fill" id="gray-bar" style="width:0%"></div></div>
-      <div class="chips">
-        <div class="chip"><div class="chip-val g" id="gray-recycled">—</div><div class="chip-lbl">Recycled</div></div>
-        <div class="chip"><div class="chip-val a" id="gray-tds">—</div><div class="chip-lbl">TDS ppm</div></div>
-        <div class="chip"><div class="chip-val" id="gray-filter">—</div><div class="chip-lbl">Filter</div></div>
-      </div>
-      <button class="edit-btn" id="gray-edit-btn" onclick="openEdit('gray')">✏️ Update Level</button>
-    </div>
-
+    <!-- RAIN WATER -->
     <div class="w-card rain">
       <div class="sensor-indicator" id="rain-sensor-row" style="display:none;">
         <div class="sensor-pulse"></div>
@@ -417,7 +394,6 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
     </div>
   </div>
 
-  <!-- Totals -->
   <div class="sec-header"><div class="sec-title">Today's Summary</div></div>
   <div class="totals-wrap">
     <div class="totals-card">
@@ -427,7 +403,6 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
     </div>
   </div>
 
-  <!-- Alerts preview -->
   <div class="sec-header">
     <div class="sec-title">Alerts</div>
     <div class="sec-link" onclick="nav('alerts')">All →</div>
@@ -435,22 +410,47 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
   <div class="alerts-wrap" id="home-alerts"></div>
 </div>
 
-<!-- ══════════ SCREEN: REPORTS ══════════ -->
+<!-- ══════════ SCREEN: REPORTS (Charts) ══════════ -->
 <div class="screen" id="screen-reports">
   <div class="status-bar"><span class="time" id="clk2">—</span><div style="font-size:13px;">📶 🔋</div></div>
-  <div class="page-title">Activity Log</div>
-  <div class="tab-row">
-    <div class="tab on" onclick="filterLog('all',this)">All</div>
-    <div class="tab" onclick="filterLog('fresh',this)">Fresh</div>
-    <div class="tab" onclick="filterLog('gray',this)">Gray</div>
-    <div class="tab" onclick="filterLog('rain',this)">Rain</div>
+  <div class="page-title">Monthly Usage</div>
+
+  <div class="chart-tabs">
+    <div class="chart-tab on" id="ctab-usage" onclick="switchChartTab('usage',this)">Expenditure</div>
+    <div class="chart-tab" id="ctab-harvest" onclick="switchChartTab('harvest',this)">Harvest</div>
   </div>
-  <div class="report-card">
-    <div class="report-card-title">Change History</div>
-    <div id="log-list"></div>
+
+  <!-- Monthly expenditure chart -->
+  <div class="chart-card" id="chart-usage-card">
+    <div class="chart-card-title">Water Expenditure</div>
+    <div class="chart-card-sub">Monthly outflow — last 6 months</div>
+    <div class="chart-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--fresh)"></div>Corporation</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--rain)"></div>Rain Water</div>
+    </div>
+    <div class="chart-area">
+      <div class="chart-bars" id="usage-bars"></div>
+      <div class="month-labels" id="usage-labels"></div>
+    </div>
+    <div class="chart-summary-row" id="usage-summary"></div>
   </div>
+
+  <!-- Harvest chart -->
+  <div class="chart-card" id="chart-harvest-card" style="display:none;">
+    <div class="chart-card-title">Rain Water Harvest</div>
+    <div class="chart-card-sub">Monthly collected rainfall — last 6 months</div>
+    <div class="chart-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--rain)"></div>Harvested (L)</div>
+    </div>
+    <div class="chart-area">
+      <div class="chart-bars" id="harvest-bars"></div>
+      <div class="month-labels" id="harvest-labels"></div>
+    </div>
+    <div class="chart-summary-row" id="harvest-summary"></div>
+  </div>
+
   <div style="padding:0 24px;">
-    <button class="btn-danger" onclick="clearLogs()">🗑️ Clear All Logs</button>
+    <button class="btn-danger" onclick="clearChartData()">🗑️ Reset Chart Data</button>
   </div>
 </div>
 
@@ -463,23 +463,14 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
   <div style="padding:0 24px;margin-bottom:20px;">
     <div style="background:var(--white);border-radius:20px;padding:20px;box-shadow:0 2px 14px rgba(28,28,30,0.05);">
       <div class="field">
-        <label>🚰 Fresh Water Alert Below (%)</label>
+        <label>🚰 Corporation Water Alert Below (%)</label>
         <input type="range" min="5" max="60" id="th-fresh" oninput="thLbl('fresh',this.value)" style="color:var(--fresh)">
         <div class="range-display" style="color:var(--fresh)"><span id="th-fresh-v">20</span>%</div>
-      </div>
-      <div class="field">
-        <label>🔁 Gray Water Alert Below (%)</label>
-        <input type="range" min="5" max="60" id="th-gray" oninput="thLbl('gray',this.value)" style="color:var(--gray-w)">
-        <div class="range-display" style="color:var(--gray-w)"><span id="th-gray-v">20</span>%</div>
       </div>
       <div class="field">
         <label>🌧️ Rain Water Alert Below (%)</label>
         <input type="range" min="5" max="60" id="th-rain" oninput="thLbl('rain',this.value)" style="color:var(--rain)">
         <div class="range-display" style="color:var(--rain)"><span id="th-rain-v">20</span>%</div>
-      </div>
-      <div class="field">
-        <label>⚠️ Gray Water TDS Limit (ppm)</label>
-        <input type="number" id="th-tds" placeholder="175">
       </div>
       <button class="btn-p" style="width:100%;margin-top:4px;" onclick="saveThresh()">Save Thresholds</button>
     </div>
@@ -507,16 +498,8 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
     <div class="setting-item" onclick="openSensorConfig('fresh')">
       <div class="setting-icon-wrap si-fresh">🚰</div>
       <div class="setting-info">
-        <div class="setting-name">Fresh Water Sensor</div>
+        <div class="setting-name">Corporation Water Sensor</div>
         <div class="setting-val" id="set-fresh-sensor">Not configured</div>
-      </div>
-      <div class="setting-arrow">›</div>
-    </div>
-    <div class="setting-item" onclick="openSensorConfig('gray')">
-      <div class="setting-icon-wrap si-gray">🔁</div>
-      <div class="setting-info">
-        <div class="setting-name">Gray Water Sensor</div>
-        <div class="setting-val" id="set-gray-sensor">Not configured</div>
       </div>
       <div class="setting-arrow">›</div>
     </div>
@@ -656,12 +639,8 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
       </select>
     </div>
     <div class="field">
-      <label>Fresh Water Tank Capacity (L)</label>
+      <label>Corporation Water Tank Capacity (L)</label>
       <input type="number" id="ab-fresh" placeholder="6000">
-    </div>
-    <div class="field">
-      <label>Gray Water Tank Capacity (L)</label>
-      <input type="number" id="ab-gray" placeholder="4000">
     </div>
     <div class="field">
       <label>Rain Water Tank Capacity (L)</label>
@@ -676,7 +655,7 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);max-
 
 <div class="bnav">
   <div class="nav-item on" id="nav-home" onclick="nav('home')"><div class="nav-icon">🏠</div><div class="nav-lbl">Home</div><div class="nav-dot"></div></div>
-  <div class="nav-item" id="nav-reports" onclick="nav('reports')"><div class="nav-icon">📋</div><div class="nav-lbl">Logs</div></div>
+  <div class="nav-item" id="nav-reports" onclick="nav('reports')"><div class="nav-icon">📊</div><div class="nav-lbl">Charts</div></div>
   <div class="nav-item" id="nav-alerts" onclick="nav('alerts')"><div class="nav-icon">🔔</div><div class="nav-lbl">Alerts</div></div>
   <div class="nav-item" id="nav-buildings" onclick="nav('buildings')"><div class="nav-icon">🏢</div><div class="nav-lbl">Buildings</div></div>
   <div class="nav-item" id="nav-settings" onclick="nav('settings')"><div class="nav-icon">⚙️</div><div class="nav-lbl">Settings</div></div>
@@ -695,34 +674,76 @@ const LS = {
 const DEF_BUILDINGS = [{
   id:'b1', name:'Prestige Tower',
   floors: ['Ground Floor','Floor 1','Floor 2','Floor 3','Floor 4','Floor 5'],
-  freshCap:6000, grayCap:4000, rainCap:3000
+  freshCap:6000, rainCap:3000
 }];
 const DEF_WATER = {
-  'b1_Ground Floor': {fresh:4280,gray:1850,rain:920,freshIn:320,freshOut:540,grayTds:180,rainMm:0}
+  'b1_Ground Floor': {fresh:4280,rain:920,freshIn:320,freshOut:540,rainMm:0}
 };
-const DEF_THRESH = {fresh:20,gray:20,rain:20,tds:175};
-const DEF_SENSORS = {fresh:{id:'',url:'',protocol:'manual'},gray:{id:'',url:'',protocol:'manual'},rain:{id:'',url:'',protocol:'manual'}};
+const DEF_THRESH = {fresh:20,rain:20};
+const DEF_SENSORS = {fresh:{id:'',url:'',protocol:'manual'},rain:{id:'',url:'',protocol:'manual'}};
 const DEF_SETTINGS = {autoRefresh:false,syncInterval:60,notif:true};
 
-let buildings  = LS.get('sk2_buildings', DEF_BUILDINGS);
-let waterData  = LS.get('sk2_water', DEF_WATER);
-let thresh     = LS.get('sk2_thresh', DEF_THRESH);
-let sensors    = LS.get('sk2_sensors', DEF_SENSORS);
-let settings   = LS.get('sk2_settings', DEF_SETTINGS);
-let logs       = LS.get('sk2_logs', []);
-let activeId   = LS.get('sk2_activeId', 'b1');
-let activeFloor= LS.get('sk2_activeFloor', 'Ground Floor');
+let buildings  = LS.get('sk3_buildings', DEF_BUILDINGS);
+let waterData  = LS.get('sk3_water', DEF_WATER);
+let thresh     = LS.get('sk3_thresh', DEF_THRESH);
+let sensors    = LS.get('sk3_sensors', DEF_SENSORS);
+let settings   = LS.get('sk3_settings', DEF_SETTINGS);
+let monthlyData= LS.get('sk3_monthly', {});   // {YYYY-MM: {freshOut:N, rainHarvest:N}}
+let activeId   = LS.get('sk3_activeId', 'b1');
+let activeFloor= LS.get('sk3_activeFloor', 'Ground Floor');
 let editingType= null;
 let editingSensorType = null;
-let logFilter  = 'all';
+let activeChartTab = 'usage';
 let autoTimer  = null;
 
 function wkey(){ return activeId + '_' + activeFloor; }
 function getW(){
-  if(!waterData[wkey()]) waterData[wkey()]={fresh:0,gray:0,rain:0,freshIn:0,freshOut:0,grayTds:0,rainMm:0};
+  if(!waterData[wkey()]) waterData[wkey()]={fresh:0,rain:0,freshIn:0,freshOut:0,rainMm:0};
   return waterData[wkey()];
 }
 function getB(){ return buildings.find(b=>b.id===activeId)||buildings[0]; }
+
+// ══════════════════════════════════════
+// MONTHLY DATA HELPERS
+// ══════════════════════════════════════
+function currentMonthKey(){
+  const d=new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+}
+function addMonthlyUsage(type, amount){
+  const k = currentMonthKey();
+  if(!monthlyData[k]) monthlyData[k]={freshOut:0,rainHarvest:0};
+  if(type==='freshOut') monthlyData[k].freshOut = (monthlyData[k].freshOut||0)+Math.abs(amount);
+  if(type==='rainHarvest') monthlyData[k].rainHarvest = (monthlyData[k].rainHarvest||0)+Math.abs(amount);
+  LS.set('sk3_monthly',monthlyData);
+}
+
+function getLast6Months(){
+  const months=[];
+  const now=new Date();
+  for(let i=5;i>=0;i--){
+    const d=new Date(now.getFullYear(),now.getMonth()-i,1);
+    const key=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+    const label=d.toLocaleString('default',{month:'short'});
+    months.push({key,label});
+  }
+  return months;
+}
+
+function seedDemoData(){
+  // If no monthly data at all, seed realistic demo data
+  const existing = Object.keys(monthlyData);
+  if(existing.length > 0) return;
+  const now = new Date();
+  const freshBase = [3200,2800,3600,3100,2950,540];
+  const rainBase  = [1200,800,2100,1800,900,920];
+  for(let i=5;i>=0;i--){
+    const d=new Date(now.getFullYear(),now.getMonth()-i,1);
+    const key=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+    monthlyData[key]={freshOut:freshBase[5-i],rainHarvest:rainBase[5-i]};
+  }
+  LS.set('sk3_monthly',monthlyData);
+}
 
 // ══════════════════════════════════════
 // RENDER HOME
@@ -731,22 +752,17 @@ function renderHome(){
   const b=getB(); const w=getW();
   if(!b) return;
 
-  // Building selector path
   document.getElementById('bsel-path').textContent = b.name + ' · ' + activeFloor;
 
-  // Sensor mode UI
-  const anyLive = ['fresh','gray','rain'].some(t=>sensors[t]&&sensors[t].protocol!=='manual'&&sensors[t].id);
+  const anyLive = ['fresh','rain'].some(t=>sensors[t]&&sensors[t].protocol!=='manual'&&sensors[t].id);
   document.getElementById('data-mode-badge').textContent = anyLive ? 'Sensor Live' : 'Manual';
   document.getElementById('sensor-mode-title').textContent = anyLive ? '📡 Sensor Mode Active' : '✏️ Manual Input Mode';
   document.getElementById('sensor-mode-sub').textContent = anyLive ? 'Data auto-syncing from configured sensors' : 'Tap Configure to set up IoT sensors';
 
-  // Cards
   renderCard('fresh', w.fresh, b.freshCap, w.freshIn, w.freshOut);
-  renderCard('gray',  w.gray,  b.grayCap,  null, null, w.grayTds);
   renderCard('rain',  w.rain,  b.rainCap,  null, null, null, w.rainMm);
 
-  // Sensor indicators
-  ['fresh','gray','rain'].forEach(t=>{
+  ['fresh','rain'].forEach(t=>{
     const s=sensors[t];
     const row=document.getElementById(t+'-sensor-row');
     const sidEl=document.getElementById(t+'-sensor-id');
@@ -761,16 +777,14 @@ function renderHome(){
     }
   });
 
-  // Health
-  const fP=pct(w.fresh,b.freshCap), gP=pct(w.gray,b.grayCap), rP=pct(w.rain,b.rainCap);
-  const h=Math.round((fP+gP+rP)/3);
+  const fP=pct(w.fresh,b.freshCap), rP=pct(w.rain,b.rainCap);
+  const h=Math.round((fP+rP)/2);
   document.getElementById('h-score').innerHTML=h+'<sup>%</sup>';
   document.getElementById('h-bar').style.width=h+'%';
   document.getElementById('h-label').textContent = h>=70?'✦ Good':h>=40?'⚠ Moderate':'⚠ Critical';
   document.getElementById('h-updated').textContent='Updated '+ftime();
 
-  // Totals
-  const ts=w.fresh+w.gray+w.rain, tc=b.freshCap+b.grayCap+b.rainCap;
+  const ts=w.fresh+w.rain, tc=b.freshCap+b.rainCap;
   document.getElementById('t-stored').textContent=ts.toLocaleString()+'L';
   document.getElementById('t-cap').textContent=tc.toLocaleString()+'L';
   document.getElementById('t-fill').textContent=Math.round((ts/tc)*100)+'%';
@@ -780,8 +794,6 @@ function renderHome(){
 
 function renderCard(type,vol,cap,inL,outL,tds,mm){
   const p=pct(vol,cap);
-  const colors={fresh:'var(--fresh)',gray:'var(--gray-w)',rain:'var(--rain)'};
-  const col=colors[type];
   document.getElementById(type+'-vol').textContent=vol.toLocaleString();
   document.getElementById(type+'-cap').textContent=cap.toLocaleString();
   document.getElementById(type+'-pct').textContent=p+'%';
@@ -791,11 +803,6 @@ function renderCard(type,vol,cap,inL,outL,tds,mm){
     document.getElementById('fresh-out').textContent='−'+(outL||0)+'L';
     const r=outL>0?Math.round(vol/outL)+'d':'∞';
     document.getElementById('fresh-reserve').textContent=r;
-  }
-  if(type==='gray'){
-    document.getElementById('gray-recycled').textContent='+'+vol+'L';
-    document.getElementById('gray-tds').textContent=(tds||0);
-    document.getElementById('gray-filter').textContent=(tds||0)>thresh.tds?'⚠ High':'✅ OK';
   }
   if(type==='rain'){
     document.getElementById('rain-mm').textContent=(mm||0)+'mm';
@@ -812,11 +819,9 @@ function pct(v,c){ return Math.min(100,Math.round((v/c)*100)); }
 function computeAlerts(){
   const b=getB(); const w=getW(); if(!b) return [];
   const a=[];
-  const fP=pct(w.fresh,b.freshCap), gP=pct(w.gray,b.grayCap), rP=pct(w.rain,b.rainCap);
-  if(fP<=thresh.fresh) a.push({type:'danger',icon:'🚨',title:'Fresh Water Critical',sub:`${b.name} · ${activeFloor} · Tank at ${fP}% (threshold ${thresh.fresh}%)`,time:'Now'});
-  if(gP<=thresh.gray)  a.push({type:'warn',  icon:'⚠️',title:'Gray Water Low',     sub:`${b.name} · ${activeFloor} · Tank at ${gP}% (threshold ${thresh.gray}%)`, time:'Now'});
-  if(rP<=thresh.rain)  a.push({type:'warn',  icon:'⚠️',title:'Rain Water Low',     sub:`${b.name} · ${activeFloor} · Tank at ${rP}% (threshold ${thresh.rain}%)`, time:'Now'});
-  if((w.grayTds||0)>thresh.tds) a.push({type:'warn',icon:'⚠️',title:'Gray TDS High',sub:`Reading ${w.grayTds}ppm — limit ${thresh.tds}ppm`,time:'Now'});
+  const fP=pct(w.fresh,b.freshCap), rP=pct(w.rain,b.rainCap);
+  if(fP<=thresh.fresh) a.push({type:'danger',icon:'🚨',title:'Corporation Water Critical',sub:`${b.name} · ${activeFloor} · Tank at ${fP}% (threshold ${thresh.fresh}%)`,time:'Now'});
+  if(rP<=thresh.rain)  a.push({type:'warn',  icon:'⚠️',title:'Rain Water Low',           sub:`${b.name} · ${activeFloor} · Tank at ${rP}% (threshold ${thresh.rain}%)`, time:'Now'});
   return a;
 }
 
@@ -829,7 +834,6 @@ function renderAlerts(){
   } else {
     homeEl.innerHTML=a.slice(0,2).map(aHTML).join('');
   }
-  // Alerts screen
   const screenEl=document.getElementById('alerts-screen-list');
   if(screenEl){
     screenEl.innerHTML=a.length?a.map(x=>`<div style="padding:0 24px 0">${aHTML(x)}</div>`).join(''):
@@ -837,6 +841,93 @@ function renderAlerts(){
   }
 }
 function aHTML(a){return`<div class="alert-item ${a.type}"><div class="a-ico">${a.icon}</div><div class="a-body"><div class="a-title">${a.title}</div><div class="a-sub">${a.sub}</div><div class="a-time">${a.time}</div></div></div>`;}
+
+// ══════════════════════════════════════
+// CHARTS
+// ══════════════════════════════════════
+function switchChartTab(tab, el){
+  activeChartTab=tab;
+  document.querySelectorAll('.chart-tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('chart-usage-card').style.display = tab==='usage'?'block':'none';
+  document.getElementById('chart-harvest-card').style.display = tab==='harvest'?'block':'none';
+  renderCharts();
+}
+
+function renderCharts(){
+  seedDemoData();
+  const months = getLast6Months();
+  const freshData = months.map(m=>(monthlyData[m.key]||{}).freshOut||0);
+  const rainData  = months.map(m=>(monthlyData[m.key]||{}).rainHarvest||0);
+  const labels    = months.map(m=>m.label);
+
+  if(activeChartTab==='usage'){
+    renderBarChart('usage-bars','usage-labels','usage-summary',labels,freshData,rainData,'usage');
+  } else {
+    renderBarChart('harvest-bars','harvest-labels','harvest-summary',labels,null,rainData,'harvest');
+  }
+}
+
+function renderBarChart(barsId, labelsId, summaryId, labels, freshArr, rainArr, mode){
+  const barsEl=document.getElementById(barsId);
+  const labelsEl=document.getElementById(labelsId);
+  const summaryEl=document.getElementById(summaryId);
+  if(!barsEl) return;
+
+  const allVals=[];
+  if(freshArr) allVals.push(...freshArr);
+  if(rainArr)  allVals.push(...rainArr);
+  const maxVal = Math.max(...allVals, 100);
+  const chartH = 140;
+
+  let barsHTML='', labelsHTML='';
+  for(let i=0;i<labels.length;i++){
+    const fH = freshArr ? Math.max(3, Math.round((freshArr[i]/maxVal)*chartH)) : 0;
+    const rH = rainArr  ? Math.max(3, Math.round((rainArr[i]/maxVal)*chartH)) : 0;
+    const fTip = freshArr ? `Corp: ${freshArr[i].toLocaleString()}L` : '';
+    const rTip = rainArr  ? `Rain: ${rainArr[i].toLocaleString()}L` : '';
+
+    barsHTML+=`<div class="month-group">`;
+    if(mode==='usage'&&freshArr){
+      barsHTML+=`<div class="bar fresh-bar" style="height:${fH}px;flex:1;" data-tip="${fTip}"></div>`;
+    }
+    if(rainArr){
+      barsHTML+=`<div class="bar rain-bar" style="height:${rH}px;flex:1;" data-tip="${rTip}"></div>`;
+    }
+    barsHTML+=`</div>`;
+    labelsHTML+=`<div class="month-lbl">${labels[i]}</div>`;
+  }
+  barsEl.innerHTML=barsHTML;
+  labelsEl.innerHTML=labelsHTML;
+
+  // Summary stats
+  const totalFresh = freshArr ? freshArr.reduce((a,b)=>a+b,0) : 0;
+  const totalRain  = rainArr  ? rainArr.reduce((a,b)=>a+b,0) : 0;
+  const avgFresh   = freshArr ? Math.round(totalFresh/6) : 0;
+  const avgRain    = rainArr  ? Math.round(totalRain/6) : 0;
+
+  if(mode==='usage'){
+    summaryEl.innerHTML=`
+      <div class="chart-stat"><div class="chart-stat-val" style="color:var(--fresh)">${(totalFresh/1000).toFixed(1)}K</div><div class="chart-stat-lbl">Total Corp</div></div>
+      <div class="chart-stat"><div class="chart-stat-val" style="color:var(--rain)">${(totalRain/1000).toFixed(1)}K</div><div class="chart-stat-lbl">Total Rain</div></div>
+      <div class="chart-stat"><div class="chart-stat-val">${avgFresh.toLocaleString()}</div><div class="chart-stat-lbl">Avg / mo</div></div>
+    `;
+  } else {
+    summaryEl.innerHTML=`
+      <div class="chart-stat"><div class="chart-stat-val" style="color:var(--rain)">${(totalRain/1000).toFixed(1)}K L</div><div class="chart-stat-lbl">Total Harvest</div></div>
+      <div class="chart-stat"><div class="chart-stat-val">${avgRain.toLocaleString()}L</div><div class="chart-stat-lbl">Avg / Month</div></div>
+      <div class="chart-stat"><div class="chart-stat-val">${Math.max(...(rainArr||[0])).toLocaleString()}L</div><div class="chart-stat-lbl">Best Month</div></div>
+    `;
+  }
+}
+
+function clearChartData(){
+  if(!confirm('Reset all chart data?')) return;
+  monthlyData={};
+  LS.set('sk3_monthly',monthlyData);
+  renderCharts();
+  showToast('🗑️ Chart data cleared');
+}
 
 // ══════════════════════════════════════
 // BUILDING SELECTOR DROPDOWN
@@ -876,15 +967,15 @@ function selectBuilding(id){
   activeId=id;
   const b=buildings.find(x=>x.id===id);
   activeFloor=b&&b.floors.length?b.floors[0]:'Ground Floor';
-  LS.set('sk2_activeId',activeId);
-  LS.set('sk2_activeFloor',activeFloor);
+  LS.set('sk3_activeId',activeId);
+  LS.set('sk3_activeFloor',activeFloor);
   renderBselList();
   renderHome();
 }
 
 function selectFloor(f){
   activeFloor=f;
-  LS.set('sk2_activeFloor',activeFloor);
+  LS.set('sk3_activeFloor',activeFloor);
   renderFloorRow();
   renderBselList();
   renderHome();
@@ -896,7 +987,7 @@ function selectFloor(f){
 // ADD BUILDING
 // ══════════════════════════════════════
 function openAddBuilding(){
-  ['ab-name'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('ab-name').value='';
   openOverlay('m-building');
 }
 function saveBuilding(){
@@ -904,14 +995,12 @@ function saveBuilding(){
   if(!name){showToast('⚠️ Enter building name');return;}
   const numFloors=parseInt(document.getElementById('ab-floors').value)||1;
   const fCap=parseInt(document.getElementById('ab-fresh').value)||6000;
-  const gCap=parseInt(document.getElementById('ab-gray').value)||4000;
   const rCap=parseInt(document.getElementById('ab-rain').value)||3000;
   const floors=[];
   for(let i=0;i<numFloors;i++) floors.push(i===0?'Ground Floor':i===1?'Floor 1':'Floor '+i);
   const id='b'+Date.now();
-  buildings.push({id,name,floors,freshCap:fCap,grayCap:gCap,rainCap:rCap});
-  LS.set('sk2_buildings',buildings);
-  addLog('Building added',name+' · '+numFloors+' floor(s)','var(--fresh)','all');
+  buildings.push({id,name,floors,freshCap:fCap,rainCap:rCap});
+  LS.set('sk3_buildings',buildings);
   closeOverlay('m-building');
   renderBuildingScreen();
   showToast('✅ '+name+' added!');
@@ -920,7 +1009,7 @@ function deleteBuilding(id){
   if(buildings.length<=1){showToast('⚠️ Cannot delete last building');return;}
   buildings=buildings.filter(b=>b.id!==id);
   if(activeId===id){ activeId=buildings[0].id; activeFloor=buildings[0].floors[0]; }
-  LS.set('sk2_buildings',buildings);
+  LS.set('sk3_buildings',buildings);
   renderBuildingScreen();
   renderHome();
   showToast('🗑️ Building removed');
@@ -932,7 +1021,7 @@ function renderBuildingScreen(){
       <div class="bc-emoji">🏢</div>
       <div class="bc-body">
         <div class="bc-name">${b.name}</div>
-        <div class="bc-sub">${b.freshCap}L / ${b.grayCap}L / ${b.rainCap}L caps</div>
+        <div class="bc-sub">${b.freshCap}L corp / ${b.rainCap}L rain</div>
         <div class="bc-floors">${b.floors.map(f=>`<div class="bc-floor-tag">${f}</div>`).join('')}</div>
       </div>
       <div class="bc-actions">
@@ -949,10 +1038,10 @@ function renderBuildingScreen(){
 function openEdit(type){
   editingType=type;
   const b=getB(); const w=getW();
-  const caps={fresh:b.freshCap,gray:b.grayCap,rain:b.rainCap};
-  const cur ={fresh:w.fresh,gray:w.gray,rain:w.rain};
-  const names={fresh:'Fresh Water 🚰',gray:'Gray Water 🔁',rain:'Rain Water 🌧️'};
-  const colors={fresh:'var(--fresh)',gray:'var(--gray-w)',rain:'var(--rain)'};
+  const caps={fresh:b.freshCap,rain:b.rainCap};
+  const cur ={fresh:w.fresh,rain:w.rain};
+  const names={fresh:'Corporation Water 🚰',rain:'Rain Water 🌧️'};
+  const colors={fresh:'var(--fresh)',rain:'var(--rain)'};
 
   document.getElementById('m-edit-title').textContent='Update '+names[type];
   document.getElementById('m-edit-sub').textContent='Tank capacity: '+caps[type].toLocaleString()+' L · '+b.name+' · '+activeFloor;
@@ -969,10 +1058,6 @@ function openEdit(type){
     extra.style.display='block';
     document.getElementById('m-extra-lbl').textContent='Outflow Today (L)';
     document.getElementById('m-extra').value=w.freshOut||0;
-  } else if(type==='gray'){
-    extra.style.display='block';
-    document.getElementById('m-extra-lbl').textContent='TDS Reading (ppm)';
-    document.getElementById('m-extra').value=w.grayTds||0;
   } else if(type==='rain'){
     extra.style.display='block';
     document.getElementById('m-extra-lbl').textContent='Rainfall Today (mm)';
@@ -987,12 +1072,12 @@ function syncSlider(v){
   document.getElementById('m-input').value=v;
   document.getElementById('m-range-disp').textContent=parseInt(v).toLocaleString()+' L';
   const b=getB();
-  const caps={fresh:b.freshCap,gray:b.grayCap,rain:b.rainCap};
+  const caps={fresh:b.freshCap,rain:b.rainCap};
   updateSliderBg(document.getElementById('m-slider'),v,caps[editingType],editingType);
 }
 function syncInput(v){
   const b=getB();
-  const caps={fresh:b.freshCap,gray:b.grayCap,rain:b.rainCap};
+  const caps={fresh:b.freshCap,rain:b.rainCap};
   const c=Math.min(Math.max(0,parseInt(v)||0),caps[editingType]);
   document.getElementById('m-slider').value=c;
   document.getElementById('m-range-disp').textContent=c.toLocaleString()+' L';
@@ -1000,7 +1085,7 @@ function syncInput(v){
 }
 function updateSliderBg(el,v,max,type){
   const p=(v/max)*100;
-  const c={fresh:['#1A6B72','#C2DFE2'],gray:['#C4785A','#E8C5B4'],rain:['#4A7C8E','#B8D0D9']};
+  const c={fresh:['#1A6B72','#C2DFE2'],rain:['#4A7C8E','#B8D0D9']};
   const [c1,c2]=c[type]||c.fresh;
   el.style.background=`linear-gradient(to right,${c1} 0%,${c1} ${p}%,${c2} ${p}%,${c2} 100%)`;
 }
@@ -1009,18 +1094,23 @@ function saveEdit(){
   const val=Math.max(0,parseInt(document.getElementById('m-input').value)||0);
   const extra=parseInt(document.getElementById('m-extra').value)||0;
   const b=getB();
-  const caps={fresh:b.freshCap,gray:b.grayCap,rain:b.rainCap};
+  const caps={fresh:b.freshCap,rain:b.rainCap};
   const clamped=Math.min(val,caps[editingType]);
   const w=getW(); const old=w[editingType];
   w[editingType]=clamped;
-  if(editingType==='fresh'){w.freshIn=Math.max(0,clamped-old);w.freshOut=extra;}
-  if(editingType==='gray') w.grayTds=extra;
-  if(editingType==='rain') w.rainMm=extra;
+  if(editingType==='fresh'){
+    const outflow=extra;
+    w.freshIn=Math.max(0,clamped-old);
+    w.freshOut=outflow;
+    if(outflow>0) addMonthlyUsage('freshOut', outflow);
+  }
+  if(editingType==='rain'){
+    w.rainMm=extra;
+    const harvested=Math.max(0,clamped-old);
+    if(harvested>0) addMonthlyUsage('rainHarvest', harvested);
+  }
   waterData[wkey()]=w;
-  LS.set('sk2_water',waterData);
-  const names={fresh:'Fresh Water',gray:'Gray Water',rain:'Rain Water'};
-  const colors={fresh:'var(--fresh)',gray:'var(--gray-w)',rain:'var(--rain)'};
-  addLog(`${names[editingType]} updated`,`${old.toLocaleString()}L → ${clamped.toLocaleString()}L · ${getB().name} · ${activeFloor}`,colors[editingType],editingType);
+  LS.set('sk3_water',waterData);
   closeOverlay('m-edit');
   renderHome();
   showToast('✅ Saved!');
@@ -1032,13 +1122,13 @@ function saveEdit(){
 function openSensorConfig(type){
   editingSensorType=type;
   const s=sensors[type]||{id:'',url:'',protocol:'manual'};
-  const names={fresh:'Fresh Water 🚰',gray:'Gray Water 🔁',rain:'Rain Water 🌧️'};
+  const names={fresh:'Corporation Water 🚰',rain:'Rain Water 🌧️'};
   document.getElementById('m-sensor-title').textContent=names[type]+' Sensor';
   document.getElementById('s-device-id').value=s.id||'';
   document.getElementById('s-api-url').value=s.url||'';
   document.getElementById('s-protocol').value=s.protocol||'manual';
   document.getElementById('s-cap').value=
-    editingSensorType==='fresh'?getB().freshCap:editingSensorType==='gray'?getB().grayCap:getB().rainCap;
+    editingSensorType==='fresh'?getB().freshCap:getB().rainCap;
   openOverlay('m-sensor');
 }
 function saveSensorConfig(){
@@ -1051,30 +1141,27 @@ function saveSensorConfig(){
   const cap=parseInt(document.getElementById('s-cap').value)||6000;
   const b=getB();
   if(type==='fresh') b.freshCap=cap;
-  if(type==='gray')  b.grayCap=cap;
   if(type==='rain')  b.rainCap=cap;
-  LS.set('sk2_sensors',sensors);
-  LS.set('sk2_buildings',buildings);
+  LS.set('sk3_sensors',sensors);
+  LS.set('sk3_buildings',buildings);
   updateSettingsScreen();
-  addLog('Sensor configured',`${type} — ID: ${sensors[type].id||'none'} · Protocol: ${sensors[type].protocol}`,'var(--sensor)','all');
   closeOverlay('m-sensor');
   renderHome();
   showToast('📡 Sensor config saved!');
 }
 function clearSensorConfig(){
   sensors[editingSensorType]={id:'',url:'',protocol:'manual'};
-  LS.set('sk2_sensors',sensors);
+  LS.set('sk3_sensors',sensors);
   updateSettingsScreen();
   closeOverlay('m-sensor');
   renderHome();
   showToast('🗑️ Sensor removed');
 }
 function updateSettingsScreen(){
-  ['fresh','gray','rain'].forEach(t=>{
+  ['fresh','rain'].forEach(t=>{
     const s=sensors[t]; const el=document.getElementById('set-'+t+'-sensor');
     if(el) el.textContent=s&&s.id?`ID: ${s.id} · ${s.protocol}`:'Not configured';
   });
-  // Auto toggle
   const ta=document.getElementById('toggle-auto');
   if(ta) ta.checked=settings.autoRefresh;
   const si=document.getElementById('sync-interval');
@@ -1083,36 +1170,33 @@ function updateSettingsScreen(){
 
 function toggleAuto(el){
   settings.autoRefresh=el.checked;
-  LS.set('sk2_settings',settings);
+  LS.set('sk3_settings',settings);
   if(el.checked) startAutoSync();
   else stopAutoSync();
   showToast(el.checked?'🔄 Auto-sync ON':'⏸ Auto-sync OFF');
 }
 function saveSyncInterval(v){
   settings.syncInterval=parseInt(v);
-  LS.set('sk2_settings',settings);
+  LS.set('sk3_settings',settings);
   if(settings.autoRefresh){stopAutoSync();startAutoSync();}
 }
 
-// ── SENSOR SIMULATION (when auto is on, simulate small changes) ──
 function startAutoSync(){
   stopAutoSync();
   autoTimer=setInterval(()=>{
-    // Only simulate if a sensor is configured (not manual)
-    const hasLive=['fresh','gray','rain'].some(t=>sensors[t]&&sensors[t].protocol!=='manual'&&sensors[t].id);
+    const hasLive=['fresh','rain'].some(t=>sensors[t]&&sensors[t].protocol!=='manual'&&sensors[t].id);
     if(!hasLive) return;
     const w=getW(); const b=getB();
-    // Tiny realistic fluctuation ±30L per interval
-    ['fresh','gray','rain'].forEach(t=>{
+    ['fresh','rain'].forEach(t=>{
       const s=sensors[t];
       if(s&&s.id&&s.protocol!=='manual'){
-        const cap=t==='fresh'?b.freshCap:t==='gray'?b.grayCap:b.rainCap;
+        const cap=t==='fresh'?b.freshCap:b.rainCap;
         const delta=Math.floor(Math.random()*60)-30;
         w[t]=Math.min(cap,Math.max(0,(w[t]||0)+delta));
       }
     });
     waterData[wkey()]=w;
-    LS.set('sk2_water',waterData);
+    LS.set('sk3_water',waterData);
     if(document.getElementById('screen-home').classList.contains('active')) renderHome();
   }, settings.syncInterval*1000);
 }
@@ -1125,56 +1209,23 @@ function thLbl(type,v){
   document.getElementById('th-'+type+'-v').textContent=v;
   const el=document.getElementById('th-'+type);
   const min=5,max=60,p=((v-min)/(max-min))*100;
-  const c={fresh:['#1A6B72','#C2DFE2'],gray:['#C4785A','#E8C5B4'],rain:['#4A7C8E','#B8D0D9']};
+  const c={fresh:['#1A6B72','#C2DFE2'],rain:['#4A7C8E','#B8D0D9']};
   const [c1,c2]=c[type];
   el.style.background=`linear-gradient(to right,${c1} 0%,${c1} ${p}%,${c2} ${p}%,${c2} 100%)`;
 }
 function loadThreshUI(){
-  ['fresh','gray','rain'].forEach(t=>{
+  ['fresh','rain'].forEach(t=>{
     const el=document.getElementById('th-'+t);
     if(el){el.value=thresh[t];thLbl(t,thresh[t]);}
   });
-  const tds=document.getElementById('th-tds');
-  if(tds) tds.value=thresh.tds;
 }
 function saveThresh(){
   thresh.fresh=parseInt(document.getElementById('th-fresh').value);
-  thresh.gray =parseInt(document.getElementById('th-gray').value);
   thresh.rain =parseInt(document.getElementById('th-rain').value);
-  thresh.tds  =parseInt(document.getElementById('th-tds').value)||175;
-  LS.set('sk2_thresh',thresh);
-  addLog('Thresholds saved',`F:${thresh.fresh}% G:${thresh.gray}% R:${thresh.rain}% TDS:${thresh.tds}ppm`,'var(--amber)','all');
+  LS.set('sk3_thresh',thresh);
   renderAlerts();
   showToast('✅ Thresholds saved!');
 }
-
-// ══════════════════════════════════════
-// LOGS
-// ══════════════════════════════════════
-function addLog(action,detail,color,type){
-  logs.unshift({action,detail,color,type,time:ftime(),date:fdate()});
-  if(logs.length>100) logs.pop();
-  LS.set('sk2_logs',logs);
-}
-function renderLogs(){
-  const el=document.getElementById('log-list');
-  const filtered=logFilter==='all'?logs:logs.filter(l=>l.type===logFilter);
-  if(!filtered.length){el.innerHTML='<div class="no-data">No logs yet.<br>Update a water level to see history.</div>';return;}
-  el.innerHTML=filtered.map(l=>`
-    <div class="log-item">
-      <div class="log-dot" style="background:${l.color}"></div>
-      <div class="log-text"><div class="log-action">${l.action}</div><div class="log-detail">${l.detail}</div></div>
-      <div class="log-time">${l.time}<br><span style="color:var(--ink-xlt)">${l.date}</span></div>
-    </div>
-  `).join('');
-}
-function filterLog(type,el){
-  logFilter=type;
-  document.querySelectorAll('.tab-row .tab').forEach(t=>t.classList.remove('on'));
-  el.classList.add('on');
-  renderLogs();
-}
-function clearLogs(){ logs=[];LS.set('sk2_logs',logs);renderLogs();showToast('🗑️ Logs cleared'); }
 
 // ══════════════════════════════════════
 // NAV
@@ -1186,11 +1237,10 @@ function nav(tab){
   const ni=document.getElementById('nav-'+tab);
   if(ni){ ni.classList.add('on'); const d=document.createElement('div');d.className='nav-dot';ni.appendChild(d); }
   if(tab==='home') renderHome();
-  if(tab==='reports'){renderLogs();}
+  if(tab==='reports'){seedDemoData();activeChartTab='usage';document.getElementById('ctab-usage').classList.add('on');document.getElementById('ctab-harvest').classList.remove('on');document.getElementById('chart-usage-card').style.display='block';document.getElementById('chart-harvest-card').style.display='none';renderCharts();}
   if(tab==='alerts'){loadThreshUI();renderAlerts();}
   if(tab==='buildings') renderBuildingScreen();
   if(tab==='settings') updateSettingsScreen();
-  // Close bsel dropdown if open
   document.getElementById('bsel-dropdown').classList.remove('open');
   document.getElementById('bsel-arrow').classList.remove('open');
 }
@@ -1209,26 +1259,24 @@ document.querySelectorAll('.overlay').forEach(o=>{
 // ══════════════════════════════════════
 function resetAll(){
   if(!confirm('Reset all data? This cannot be undone.')) return;
-  ['sk2_buildings','sk2_water','sk2_thresh','sk2_sensors','sk2_settings','sk2_logs','sk2_activeId','sk2_activeFloor'].forEach(k=>localStorage.removeItem(k));
+  ['sk3_buildings','sk3_water','sk3_thresh','sk3_sensors','sk3_settings','sk3_monthly','sk3_activeId','sk3_activeFloor'].forEach(k=>localStorage.removeItem(k));
   location.reload();
 }
 
 // ══════════════════════════════════════
-// CLOCK
+// CLOCK & TOAST
 // ══════════════════════════════════════
 function ftime(){ return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); }
-function fdate(){ return new Date().toLocaleDateString([],{day:'numeric',month:'short'}); }
 function tick(){ const t=ftime(); ['clk1','clk2','clk3','clk4','clk5'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=t;}); }
 tick(); setInterval(tick,10000);
 
-// ══════════════════════════════════════
-// TOAST
-// ══════════════════════════════════════
-let _tt; function showToast(msg){ const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2500); }
+let _tt;
+function showToast(msg){ const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2500); }
 
 // ══════════════════════════════════════
 // INIT
 // ══════════════════════════════════════
+seedDemoData();
 renderHome();
 if(settings.autoRefresh) startAutoSync();
 </script>
